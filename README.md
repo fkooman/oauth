@@ -4,7 +4,7 @@
 Very simple OAuth 2.0 authorization server.
 
 # Apache
-Place this in `/etc/httpd.d
+Place this in `/etc/httpd/conf.d/oauth.conf`:
 
     Alias /oauth /var/www/oauth/web
 
