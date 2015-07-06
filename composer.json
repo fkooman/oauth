@@ -1,0 +1,24 @@
+{
+    "authors": [
+        {
+            "email": "fkooman@tuxed.net",
+            "name": "Fran\u00e7ois Kooman"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "fkooman\\OAuth\\": "src/"
+        }
+    },
+    "description": "Simple OAuth 2.0 Server",
+    "license": "AGPL3.0",
+    "name": "fkooman/oauth",
+    "require": {
+        "ext-date": "*",
+        "ext-filter": "*",
+        "ext-spl": "*",
+        "fkooman/rest": "^0.9.0",
+        "namshi/jose": "^5.0",
+        "twig/twig": "^1.18"
+    }
+}
