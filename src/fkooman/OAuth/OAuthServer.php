@@ -73,8 +73,8 @@ class OAuthServer
         // generate an access token
         $accessToken = $this->accessToken->generate(
             time(),
-            $redirectUri,
-            $scope
+            $p['redirect_uri'],
+            $p['scope']
         );
 
         $response = new JsonResponse();
@@ -82,7 +82,7 @@ class OAuthServer
         $response->setBody(
             array(
                 'access_token' => $accessToken,
-                'scope' => $scope,
+                'scope' => $p['scope'],
             )
         );
 

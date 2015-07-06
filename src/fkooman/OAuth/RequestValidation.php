@@ -17,8 +17,10 @@ class RequestValidation
 
         // scope
         $scope = $request->getUrl()->getQueryParameter('scope');
-        if (false === InputValidation::scope($scope)) {
-            throw new BadRequestException('invalid scope');
+        if (null !== $scope) {
+            if (false === InputValidation::scope($scope)) {
+                throw new BadRequestException('invalid scope');
+            }
         }
 
         // state
@@ -41,11 +43,11 @@ class RequestValidation
         // ...
         // ...
 
-        // scope
-        $scope = $request->getPostParameter('scope');
-        if (false === InputValidation::scope($scope)) {
-            throw new BadRequestException('invalid scope');
-        }
+#        // scope
+#        $scope = $request->getPostParameter('scope');
+#        if (false === InputValidation::scope($scope)) {
+#            throw new BadRequestException('invalid scope');
+#        }
 
         // redirect_uri
         $redirectUri = $request->getPostParameter('redirect_uri');
@@ -54,7 +56,7 @@ class RequestValidation
         }
 
         return array(
-            'scope' => $scope,
+            //'scope' => $scope,
             'redirect_uri' => $redirectUri,
         );
     }
