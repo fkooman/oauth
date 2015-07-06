@@ -1,6 +1,6 @@
 <?php
 
-namespace fkooman\OAuth;
+namespace fkooman\OAuth\Impl;
 
 use PHPUnit_Framework_TestCase;
 

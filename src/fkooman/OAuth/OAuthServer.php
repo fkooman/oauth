@@ -8,13 +8,13 @@ use fkooman\Http\Exception\BadRequestException;
 
 class OAuthServer
 {
-    /** @var TemplateManager */
+    /** @var TemplateInterface */
     private $templateManager;
 
     /** @var AuthorizationCodeInterface */
     private $authorizationCode;
 
-    public function __construct(TemplateManager $templateManager, AuthorizationCodeInterface $authorizationCode)
+    public function __construct(TemplateInterface $templateManager, AuthorizationCodeInterface $authorizationCode)
     {
         $this->templateManager = $templateManager;
         $this->authorizationCode = $authorizationCode;
@@ -23,6 +23,8 @@ class OAuthServer
     public function getAuthorize(Request $request)
     {
         $this->validateAuthorizeParameters($request);
+        $redirectUri = $request->getUrl()->getQueryParameter('redirect_uri');
+        $scope = $request->getUrl()->getQueryParameter('scope');
 
         // show the approval dialog
         return $this->templateManager->render(
@@ -38,6 +40,8 @@ class OAuthServer
     public function postAuthorize(Request $request)
     {
         $this->validateAuthorizeParameters($request);
+        $redirectUri = $request->getUrl()->getQueryParameter('redirect_uri');
+        $scope = $request->getUrl()->getQueryParameter('scope');
 
         $approval = $request->getPostParameter('approval');
         if ('yes' === $approval) {

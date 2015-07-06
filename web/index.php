@@ -5,12 +5,12 @@ require_once dirname(__DIR__).'/vendor/autoload.php';
 use fkooman\Rest\Service;
 use fkooman\Http\Request;
 use fkooman\OAuth\OAuthServer;
-use fkooman\OAuth\TemplateManager;
-use fkooman\OAuth\JwsAuthorizationCode;
+use fkooman\OAuth\Impl\TwigTemplateManager;
+use fkooman\OAuth\Impl\JwsAuthorizationCode;
 
 $service = new Service();
 
-$o = new OAuthServer(new TemplateManager(), new JwsAuthorizationCode('secret'));
+$o = new OAuthServer(new TwigTemplateManager(), new JwsAuthorizationCode('secret'));
 
 $service->get(
     '/authorize',

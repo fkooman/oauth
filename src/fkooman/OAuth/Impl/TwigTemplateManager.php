@@ -15,13 +15,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace fkooman\OAuth;
+namespace fkooman\OAuth\Impl;
 
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use RuntimeException;
+use fkooman\OAuth\TemplateInterface;
 
-class TemplateManager
+class TwigTemplateManager implements TemplateInterface
 {
     /** @var Twig_Environment */
     private $twig;
@@ -31,8 +32,8 @@ class TemplateManager
 
     public function __construct($cacheDir = null)
     {
-        $configTemplateDir = dirname(dirname(dirname(__DIR__))).'/config/views';
-        $defaultTemplateDir = dirname(dirname(dirname(__DIR__))).'/views';
+        $configTemplateDir = dirname(dirname(dirname(dirname(__DIR__)))).'/config/views';
+        $defaultTemplateDir = dirname(dirname(dirname(dirname(__DIR__)))).'/views';
 
         $templateDirs = array();
         if (false !== is_dir($configTemplateDir)) {
@@ -68,16 +69,16 @@ class TemplateManager
         $this->globalVariables = $globalVariables;
     }
 
-    public function render($templateName, array $variables = array())
+    public function render($templateName, array $templateVariables = array())
     {
-        $variables = array_merge($this->globalVariables, $variables);
+        $templateVariables = array_merge($this->globalVariables, $templateVariables);
 
         return $this->twig->render(
             sprintf(
                 '%s.twig',
                 $templateName
             ),
-            $variables
+            $templateVariables
         );
     }
 }

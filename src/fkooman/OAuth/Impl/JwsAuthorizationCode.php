@@ -1,8 +1,9 @@
 <?php
 
-namespace fkooman\OAuth;
+namespace fkooman\OAuth\Impl;
 
 use Namshi\JOSE\SimpleJWS;
+use fkooman\OAuth\AuthorizationCodeInterface;
 
 class JwsAuthorizationCode implements AuthorizationCodeInterface
 {
