@@ -32,4 +32,11 @@ class InputValidation
     {
         return $scope;
     }
+
+    public static function state($state)
+    {
+        if (null === $state) {
+            return false;
+        }
+    }
 }

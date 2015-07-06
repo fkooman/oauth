@@ -4,7 +4,6 @@ namespace fkooman\OAuth;
 
 use fkooman\Http\Request;
 use fkooman\Http\RedirectResponse;
-use fkooman\Http\Exception\BadRequestException;
 
 class OAuthServer
 {
@@ -22,7 +21,7 @@ class OAuthServer
 
     public function getAuthorize(Request $request)
     {
-        $this->validateAuthorizeParameters($request);
+        RequestValidation::validateAuthorizeRequest($request);
         $redirectUri = $request->getUrl()->getQueryParameter('redirect_uri');
         $scope = $request->getUrl()->getQueryParameter('scope');
 
@@ -39,49 +38,54 @@ class OAuthServer
 
     public function postAuthorize(Request $request)
     {
-        $this->validateAuthorizeParameters($request);
-        $redirectUri = $request->getUrl()->getQueryParameter('redirect_uri');
-        $scope = $request->getUrl()->getQueryParameter('scope');
+        // FIXME: referrer url MUST be request URL?
+        $p = RequestValidation::validateAuthorizeRequest($request);
 
         $approval = $request->getPostParameter('approval');
         if ('yes' === $approval) {
             $code = $this->authorizationCode->generate(
                 time(),
-                $redirectUri,
-                $scope
+                $p['redirect_uri'],
+                $p['scope']
             );
 
             return new RedirectResponse(
                 // FIXME: append, not just simply add
-                $redirectUri.'?code='.$code,
+                $p['redirect_uri'].'?code='.$code.'&state='.$p['state'],
                 302
             );
         }
 
         // not approved
         return new RedirectResponse(
-            $redirectUri.'?error=XXX',
+            $p['redirect_uri'].'?error=XXX&state='.$p['state'],
             302
         );
     }
 
     public function postToken(Request $request)
     {
-        return '';
-    }
+        $p = RequestValidation::validateTokenRequest($request);
+        $authorizationCode = $this->authorizationCode->validate($p['code']);
 
-    private static function validateAuthorizeParameters(Request $request)
-    {
-        // redirect_uri
-        $redirectUri = $request->getUrl()->getQueryParameter('redirect_uri');
-        if (false === InputValidation::redirectUri($redirectUri)) {
-            throw new BadRequestException('invalid redirect_uri');
-        }
+        // FIXME: values in code should match values from this request!
 
-        // scope
-        $scope = $request->getUrl()->getQueryParameter('scope');
-        if (false === InputValidation::scope($scope)) {
-            throw new BadRequestException('invalid scope');
-        }
+        // generate an access token
+        $accessToken = $this->accessToken->generate(
+            time(),
+            $redirectUri,
+            $scope
+        );
+
+        $response = new JsonResponse();
+        // FIXME: caching headers
+        $response->setBody(
+            array(
+                'access_token' => $accessToken,
+                'scope' => $scope,
+            )
+        );
+
+        return $response;
     }
 }
