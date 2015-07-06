@@ -22,17 +22,7 @@ class OAuthServer
 
     public function getAuthorize(Request $request)
     {
-        // redirect_uri
-        $redirectUri = $request->getUrl()->getQueryParameter('redirect_uri');
-        if (false === InputValidation::redirectUri($redirectUri)) {
-            throw new BadRequestException('invalid redirect_uri');
-        }
-
-        // scope
-        $scope = $request->getUrl()->getQueryParameter('scope');
-        if (false === InputValidation::scope($scope)) {
-            throw new BadRequestException('invalid scope');
-        }
+        $this->validateAuthorizeParameters($request);
 
         // show the approval dialog
         return $this->templateManager->render(
@@ -47,17 +37,7 @@ class OAuthServer
 
     public function postAuthorize(Request $request)
     {
-        // redirect_uri
-        $redirectUri = $request->getUrl()->getQueryParameter('redirect_uri');
-        if (false === InputValidation::redirectUri($redirectUri)) {
-            throw new BadRequestException('invalid redirect_uri');
-        }
-
-        // scope
-        $scope = $request->getUrl()->getQueryParameter('scope');
-        if (false === InputValidation::scope($scope)) {
-            throw new BadRequestException('invalid scope');
-        }
+        $this->validateAuthorizeParameters($request);
 
         $approval = $request->getPostParameter('approval');
         if ('yes' === $approval) {
@@ -84,5 +64,20 @@ class OAuthServer
     public function postToken(Request $request)
     {
         return '';
+    }
+
+    private static function validateAuthorizeParameters(Request $request)
+    {
+        // redirect_uri
+        $redirectUri = $request->getUrl()->getQueryParameter('redirect_uri');
+        if (false === InputValidation::redirectUri($redirectUri)) {
+            throw new BadRequestException('invalid redirect_uri');
+        }
+
+        // scope
+        $scope = $request->getUrl()->getQueryParameter('scope');
+        if (false === InputValidation::scope($scope)) {
+            throw new BadRequestException('invalid scope');
+        }
     }
 }
