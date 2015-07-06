@@ -7,10 +7,11 @@ use fkooman\Http\Request;
 use fkooman\OAuth\OAuthServer;
 use fkooman\OAuth\Impl\TwigTemplateManager;
 use fkooman\OAuth\Impl\JwsAuthorizationCode;
+use fkooman\OAuth\Impl\JwsAccessToken;
 
 $service = new Service();
 
-$o = new OAuthServer(new TwigTemplateManager(), new JwsAuthorizationCode('secret'));
+$o = new OAuthServer(new TwigTemplateManager(), new JwsAuthorizationCode('secret'), new JwsAccessToken('secret'));
 
 $service->get(
     '/authorize',

@@ -39,6 +39,10 @@ class RequestValidation
     public static function validateTokenRequest(Request $request)
     {
         // code
+        $code = $request->getPostParameter('code');
+        if (false === InputValidation::code($code)) {
+            throw new BadRequestException('invalid code');
+        }
 
         // ...
         // ...
@@ -56,7 +60,7 @@ class RequestValidation
         }
 
         return array(
-            //'scope' => $scope,
+            'code' => $code,
             'redirect_uri' => $redirectUri,
         );
     }

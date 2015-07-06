@@ -6,12 +6,12 @@ use PHPUnit_Framework_TestCase;
 
 class JwsAuthorizationCodeTest extends PHPUnit_Framework_TestCase
 {
-    public function testGenerate()
+    public function testCreate()
     {
         $jwsAuthorizationCode = new JwsAuthorizationCode('secret');
         $this->assertSame(
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXUyJ9.eyJpYXQiOjEyMzQ1NiwianRpIjoic29tZV9ub25jZV90aGF0X211c3RfYmVfcmVjb3JkZWRfYWdhaW5zdF9yZXBsYXkiLCJyZWRpcmVjdF91cmkiOiJodHRwczpcL1wvZXhhbXBsZS5vcmdcL2NhbGxiYWNrIiwic2NvcGUiOiJmb28gYmFyIn0.kWdjQ69Mk-PQ61fvdsun1Y_iUxGyJC0IVEvhbC1r4vQ',
-            $jwsAuthorizationCode->generate(123456, 'https://example.org/callback', 'foo bar')
+            $jwsAuthorizationCode->create(123456, 'https://example.org/callback', 'foo bar')
         );
     }
 

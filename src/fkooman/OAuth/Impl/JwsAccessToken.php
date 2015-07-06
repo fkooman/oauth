@@ -3,9 +3,9 @@
 namespace fkooman\OAuth\Impl;
 
 use Namshi\JOSE\SimpleJWS;
-use fkooman\OAuth\AuthorizationCodeInterface;
+use fkooman\OAuth\AccessTokenInterface;
 
-class JwsAuthorizationCode implements AuthorizationCodeInterface
+class JwsAccessToken implements AccessTokenInterface
 {
     /** @var string */
     private $signKey;

@@ -4,6 +4,7 @@ namespace fkooman\OAuth;
 
 use fkooman\Http\Request;
 use fkooman\Http\RedirectResponse;
+use fkooman\Http\JsonResponse;
 
 class OAuthServer
 {
@@ -13,10 +14,14 @@ class OAuthServer
     /** @var AuthorizationCodeInterface */
     private $authorizationCode;
 
-    public function __construct(TemplateInterface $templateManager, AuthorizationCodeInterface $authorizationCode)
+    /** @var AccessTokenInterface */
+    private $accessToken;
+
+    public function __construct(TemplateInterface $templateManager, AuthorizationCodeInterface $authorizationCode, AccessTokenInterface $accessToken)
     {
         $this->templateManager = $templateManager;
         $this->authorizationCode = $authorizationCode;
+        $this->accessToken = $accessToken;
     }
 
     public function getAuthorize(Request $request)
@@ -43,7 +48,7 @@ class OAuthServer
 
         $approval = $request->getPostParameter('approval');
         if ('yes' === $approval) {
-            $code = $this->authorizationCode->generate(
+            $code = $this->authorizationCode->create(
                 time(),
                 $p['redirect_uri'],
                 $p['scope']
@@ -70,11 +75,11 @@ class OAuthServer
 
         // FIXME: values in code should match values from this request!
 
-        // generate an access token
-        $accessToken = $this->accessToken->generate(
+        // create an access token
+        $accessToken = $this->accessToken->create(
             time(),
-            $p['redirect_uri'],
-            $p['scope']
+            $authorizationCode['redirect_uri'],
+            $authorizationCode['scope']
         );
 
         $response = new JsonResponse();
@@ -82,7 +87,7 @@ class OAuthServer
         $response->setBody(
             array(
                 'access_token' => $accessToken,
-                'scope' => $p['scope'],
+                'scope' => $authorizationCode['scope'],
             )
         );
 

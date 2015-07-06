@@ -39,4 +39,11 @@ class InputValidation
             return false;
         }
     }
+
+    public static function code($code)
+    {
+        if (null === $code) {
+            return false;
+        }
+    }
 }
