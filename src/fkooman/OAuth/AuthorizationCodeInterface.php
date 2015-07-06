@@ -18,7 +18,8 @@ interface AuthorizationCodeInterface
      *
      * @param string $code the authorization_code to validate
      *
-     * @return array the fields that were bound to the authorization_code
+     * @return mixed the fields that were bound to the authorization_code as
+     *               array, or false if the code is invalid
      */
     public function validate($code);
 }
