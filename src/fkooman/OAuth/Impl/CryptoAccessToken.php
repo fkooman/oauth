@@ -43,6 +43,6 @@ class CryptoAccessToken implements AccessTokenInterface
         // FIXME: catch situation where signature not matches and return false instead
         $crypto = new Crypto($this->encryptKey, $this->signKey);
 
-        return json_decode($crypto->decode($code), true);
+        return json_decode($crypto->decrypt($code), true);
     }
 }

@@ -45,6 +45,6 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
 
         $crypto = new Crypto($this->encryptKey, $this->signKey);
 
-        return json_decode($crypto->decode($code), true);
+        return json_decode($crypto->decrypt($code), true);
     }
 }
