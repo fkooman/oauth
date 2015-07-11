@@ -2,7 +2,7 @@
 
 namespace fkooman\OAuth\Impl;
 
-use fkooman\Crypto\Crypto;
+use fkooman\Crypto\Symmetric;
 use fkooman\OAuth\AuthorizationCodeInterface;
 
 class CryptoAuthorizationCode implements AuthorizationCodeInterface
@@ -33,7 +33,7 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
             'scope' => $scope,
         );
 
-        $crypto = new Crypto($this->encryptKey, $this->signKey);
+        $crypto = new Symmetric($this->encryptKey, $this->signKey);
 
         return $crypto->encrypt(json_encode($payload));
     }
@@ -43,7 +43,7 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
         // FIXME: protection against replaying must be implemented somewhere,
         // maybe here??
 
-        $crypto = new Crypto($this->encryptKey, $this->signKey);
+        $crypto = new Symmetric($this->encryptKey, $this->signKey);
 
         return json_decode($crypto->decrypt($code), true);
     }
