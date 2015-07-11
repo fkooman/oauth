@@ -19,7 +19,7 @@ class CryptoAccessToken implements AccessTokenInterface
         $this->signKey = $signKey;
     }
 
-    public function create($issuedAt, $redirectUri, $scope)
+    public function create($userId, $issuedAt, $redirectUri, $scope)
     {
         // generate code
         $payload = array(
@@ -27,7 +27,7 @@ class CryptoAccessToken implements AccessTokenInterface
             // FIXME: add nonce
 
 # https://tools.ietf.org/html/rfc7519#section-4.1.7
-
+            'user_id' => $userId,
             'jti' => 'some_nonce_that_must_be_recorded_against_replay',
             'redirect_uri' => $redirectUri,
             'scope' => $scope,

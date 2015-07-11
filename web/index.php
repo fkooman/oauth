@@ -3,13 +3,37 @@
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
 use fkooman\Rest\Service;
+use fkooman\Rest\PluginRegistry;
+use fkooman\Rest\ExceptionHandler;
+use fkooman\Rest\Plugin\Authentication\AuthenticationPlugin;
+use fkooman\Rest\Plugin\Authentication\UserInfoInterface;
+use fkooman\Rest\Plugin\Basic\BasicAuthentication;
 use fkooman\Http\Request;
 use fkooman\OAuth\OAuthServer;
 use fkooman\OAuth\Impl\TwigTemplateManager;
 use fkooman\OAuth\Impl\CryptoAuthorizationCode;
 use fkooman\OAuth\Impl\CryptoAccessToken;
 
+ExceptionHandler::register();
+
 $service = new Service();
+
+$basicAuthentication = new BasicAuthentication(
+    function ($userName) {
+        return password_hash('bar', PASSWORD_DEFAULT);
+    },
+    array(
+        'realm' => 'OAuth',
+    )
+);
+
+$authenticationPlugin = new AuthenticationPlugin();
+$authenticationPlugin->registerAuthenticationPlugin($basicAuthentication);
+
+$pluginRegistry = new PluginRegistry();
+$pluginRegistry->registerDefaultPlugin($authenticationPlugin);
+
+$service->setPluginRegistry($pluginRegistry);
 
 $o = new OAuthServer(
     new TwigTemplateManager(),
@@ -19,15 +43,15 @@ $o = new OAuthServer(
 
 $service->get(
     '/authorize',
-    function (Request $request) use ($o) {
-        return $o->getAuthorize($request);
+    function (Request $request, UserInfoInterface $userInfo) use ($o) {
+        return $o->getAuthorize($request, $userInfo);
     }
 );
 
 $service->post(
     '/authorize',
-    function (Request $request) use ($o) {
-        return $o->postAuthorize($request);
+    function (Request $request, UserInfoInterface $userInfo) use ($o) {
+        return $o->postAuthorize($request, $userInfo);
     }
 );
 
@@ -35,7 +59,12 @@ $service->post(
     '/token',
     function (Request $request) use ($o) {
         return $o->postToken($request);
-    }
+    },
+    array(
+        'fkooman\Rest\Plugin\Authentication\AuthenticationPlugin' => array(
+            'enabled' => false,
+        ),
+    )
 );
 
 $service->run()->send();

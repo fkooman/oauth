@@ -7,11 +7,12 @@ interface AccessTokenInterface
     /**
      * Create an access_token.
      *
+     * @param string $userId      the user identifiero
      * @param int    $issuedAt    the issue time (epoch)
      * @param string $redirectUri the redirect_uri of the client
      * @param string $scope       the scope requested by the client
      */
-    public function create($issuedAt, $redirectUri, $scope);
+    public function create($userId, $issuedAt, $redirectUri, $scope);
 
     /**
      * Validate an access_token.

@@ -2,6 +2,7 @@
 
 namespace fkooman\OAuth;
 
+use fkooman\Rest\Plugin\Authentication\UserInfoInterface;
 use fkooman\Http\Request;
 use fkooman\Http\RedirectResponse;
 use fkooman\Http\JsonResponse;
@@ -24,7 +25,7 @@ class OAuthServer
         $this->accessToken = $accessToken;
     }
 
-    public function getAuthorize(Request $request)
+    public function getAuthorize(Request $request, UserInfoInterface $userInfo)
     {
         RequestValidation::validateAuthorizeRequest($request);
         $redirectUri = $request->getUrl()->getQueryParameter('redirect_uri');
@@ -41,7 +42,7 @@ class OAuthServer
         );
     }
 
-    public function postAuthorize(Request $request)
+    public function postAuthorize(Request $request, UserInfoInterface $userInfo)
     {
         // FIXME: referrer url MUST be request URL?
         $p = RequestValidation::validateAuthorizeRequest($request);
@@ -49,6 +50,7 @@ class OAuthServer
         $approval = $request->getPostParameter('approval');
         if ('yes' === $approval) {
             $code = $this->authorizationCode->create(
+                $userInfo->getUserId(),
                 time(),
                 $p['redirect_uri'],
                 $p['scope']
@@ -77,6 +79,7 @@ class OAuthServer
 
         // create an access token
         $accessToken = $this->accessToken->create(
+            $authorizationCode['user_id'],
             time(),
             $authorizationCode['redirect_uri'],
             $authorizationCode['scope']

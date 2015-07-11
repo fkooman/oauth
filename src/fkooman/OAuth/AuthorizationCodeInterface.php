@@ -7,11 +7,12 @@ interface AuthorizationCodeInterface
     /**
      * Create an authorization_code.
      *
+     * @param string $userId      the user identifier
      * @param int    $issuedAt    the issue time (epoch)
      * @param string $redirectUri the redirect_uri of the client
      * @param string $scope       the scope requested by the client
      */
-    public function create($issuedAt, $redirectUri, $scope);
+    public function create($userId, $issuedAt, $redirectUri, $scope);
 
     /**
      * Validate an authorization_code.

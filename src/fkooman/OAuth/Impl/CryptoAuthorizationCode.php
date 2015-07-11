@@ -19,13 +19,13 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
         $this->signKey = $signKey;
     }
 
-    public function create($issuedAt, $redirectUri, $scope)
+    public function create($userId, $issuedAt, $redirectUri, $scope)
     {
         // generate code
         $payload = array(
             'iat' => $issuedAt,
             // FIXME: add nonce
-
+            'user_id' => $userId,
 # https://tools.ietf.org/html/rfc7519#section-4.1.7
 
             'jti' => 'some_nonce_that_must_be_recorded_against_replay',
