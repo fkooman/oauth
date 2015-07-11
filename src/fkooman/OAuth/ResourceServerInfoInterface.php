@@ -2,7 +2,7 @@
 
 namespace fkooman\OAuth;
 
-interface ResourceServerInfoInterface 
+interface ResourceServerInfoInterface
 {
     public function getResourceServer($bearerToken);
 }

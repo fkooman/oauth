@@ -2,7 +2,7 @@
 
 namespace fkooman\OAuth;
 
-interface ClientInfoInterface 
+interface ClientInfoInterface
 {
     public function getClient($clientId);
 }
