@@ -76,6 +76,8 @@ class OAuthServer
         $authorizationCode = $this->authorizationCode->validate($p['code']);
 
         // FIXME: values in code should match values from this request!
+        // FIXME: check for expired code! >= 10 minutes old
+        // FIXME: keep log of used codes (must not allowed to be replayed)
 
         // create an access token
         $accessToken = $this->accessToken->create(
@@ -92,6 +94,21 @@ class OAuthServer
                 'access_token' => $accessToken,
                 'scope' => $authorizationCode['scope'],
             )
+        );
+
+        return $response;
+    }
+
+    public function postIntrospect(Request $request)
+    {
+        // FIXME: must be Bearer authenticated
+        $p = RequestValidation::validateIntrospectRequest($request);
+        $accessToken = $this->accessToken->validate($p['token']);
+
+        $response = new JsonResponse();
+        // FIXME: caching headers
+        $response->setBody(
+            $accessToken
         );
 
         return $response;

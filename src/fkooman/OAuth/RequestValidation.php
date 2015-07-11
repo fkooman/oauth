@@ -64,4 +64,17 @@ class RequestValidation
             'redirect_uri' => $redirectUri,
         );
     }
+
+    public static function validateIntrospectRequest(Request $request)
+    {
+        // token
+        $token = $request->getPostParameter('token');
+        if (false === InputValidation::token($token)) {
+            throw new BadRequestException('invalid token');
+        }
+
+        return array(
+            'token' => $token,
+        );
+    }
 }

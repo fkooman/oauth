@@ -4,6 +4,7 @@ namespace fkooman\OAuth\Impl;
 
 use fkooman\Crypto\Symmetric;
 use fkooman\OAuth\AuthorizationCodeInterface;
+use fkooman\Json\Json;
 
 class CryptoAuthorizationCode implements AuthorizationCodeInterface
 {
@@ -35,7 +36,7 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
 
         $crypto = new Symmetric($this->encryptKey, $this->signKey);
 
-        return $crypto->encrypt(json_encode($payload));
+        return $crypto->encrypt(Json::encode($payload));
     }
 
     public function validate($code)
@@ -45,6 +46,6 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
 
         $crypto = new Symmetric($this->encryptKey, $this->signKey);
 
-        return json_decode($crypto->decrypt($code), true);
+        return Json::decode($crypto->decrypt($code), true);
     }
 }

@@ -67,4 +67,17 @@ $service->post(
     )
 );
 
+$service->post(
+    '/introspect',
+    function (Request $request) use ($o) {
+        return $o->postIntrospect($request);
+    },
+    // FIXME: this one must use Bearer!
+    array(
+        'fkooman\Rest\Plugin\Authentication\AuthenticationPlugin' => array(
+            'enabled' => false,
+        ),
+    )
+);
+
 $service->run()->send();

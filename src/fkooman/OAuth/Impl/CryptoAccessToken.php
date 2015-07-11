@@ -4,6 +4,7 @@ namespace fkooman\OAuth\Impl;
 
 use fkooman\Crypto\Symmetric;
 use fkooman\OAuth\AccessTokenInterface;
+use fkooman\Json\Json;
 
 class CryptoAccessToken implements AccessTokenInterface
 {
@@ -35,14 +36,14 @@ class CryptoAccessToken implements AccessTokenInterface
 
         $crypto = new Symmetric($this->encryptKey, $this->signKey);
 
-        return $crypto->encrypt(json_encode($payload));
+        return $crypto->encrypt(Json::encode($payload));
     }
 
-    public function validate($code)
+    public function validate($token)
     {
         // FIXME: catch situation where signature not matches and return false instead
         $crypto = new Symmetric($this->encryptKey, $this->signKey);
 
-        return json_decode($crypto->decrypt($code), true);
+        return Json::decode($crypto->decrypt($token), true);
     }
 }

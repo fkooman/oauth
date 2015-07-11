@@ -46,4 +46,11 @@ class InputValidation
             return false;
         }
     }
+
+    public static function token($token)
+    {
+        if (null === $token) {
+            return false;
+        }
+    }
 }
