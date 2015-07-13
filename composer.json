@@ -18,8 +18,10 @@
         "ext-filter": "*",
         "ext-spl": "*",
         "fkooman/crypto": "dev-master",
+        "fkooman/ini": "^1.0",
         "fkooman/rest": "^0.9.0",
-        "twig/twig": "^1.18",
-        "fkooman/rest-plugin-basic": "^0.6.1"
+        "fkooman/rest-plugin-basic": "^0.6.1",
+        "fkooman/rest-plugin-bearer": "^0.5.3",
+        "twig/twig": "^1.18"
     }
 }
