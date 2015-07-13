@@ -4,21 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b763cbdcb1a64f1110c15fdbf446fd65",
+    "hash": "c84837095f6dc4fe30f9e336186bc0b5",
     "packages": [
         {
             "name": "fkooman/base64",
-            "version": "1.0.0",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-lib-base64.git",
-                "reference": "48e0869cb05ad8eba6bbc205f31e4509910d038e"
+                "reference": "f29179c593efb344e470b4a1dcffd2819bd6e084"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-base64/zipball/48e0869cb05ad8eba6bbc205f31e4509910d038e",
-                "reference": "48e0869cb05ad8eba6bbc205f31e4509910d038e",
+                "url": "https://api.github.com/repos/fkooman/php-lib-base64/zipball/f29179c593efb344e470b4a1dcffd2819bd6e084",
+                "reference": "f29179c593efb344e470b4a1dcffd2819bd6e084",
                 "shasum": ""
+            },
+            "require": {
+                "ext-spl": "*",
+                "php": ">5.3.3"
             },
             "type": "library",
             "autoload": {
@@ -37,7 +41,7 @@
                 }
             ],
             "description": "A base64 encoder and decoder",
-            "time": "2015-07-07 21:32:33"
+            "time": "2015-07-13 16:08:09"
         },
         {
             "name": "fkooman/crypto",
@@ -45,17 +49,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-lib-crypto.git",
-                "reference": "258188ebb313b5a7f80f1290d67d0d0b03374cdb"
+                "reference": "6b99d9a8e89bedd57a9079860c530f42e367d9fd"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/fkooman/php-lib-crypto/zipball/6b99d9a8e89bedd57a9079860c530f42e367d9fd",
-                "reference": "258188ebb313b5a7f80f1290d67d0d0b03374cdb",
+                "reference": "6b99d9a8e89bedd57a9079860c530f42e367d9fd",
                 "shasum": ""
             },
             "require": {
                 "ext-hash": "*",
-                "ext-json": "*",
                 "ext-openssl": "*",
                 "ext-spl": "*",
                 "fkooman/base64": "^1.0",
@@ -79,7 +82,7 @@
                 }
             ],
             "description": "A simple encryption and decryption library",
-            "time": "2015-07-11 16:02:16"
+            "time": "2015-07-13 09:05:16"
         },
         {
             "name": "fkooman/ini",
