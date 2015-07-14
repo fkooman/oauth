@@ -9,27 +9,43 @@ use fkooman\Json\Json;
 
 class ResourceServerValidator implements ValidatorInterface
 {
-    public function __construct()
+    /** @var string */
+    private $resourceServerData;
+
+    public function __construct($resourceServerFile)
     {
-        // FIXME: implement file
+        $this->resourceServerData = Json::decodeFile($resourceServerFile);
     }
 
     public function validate($bearerToken)
     {
-        // find the resource server ID
-#        $decodedToken = Base64Url::decode($bearerToken);
-#        $jsonToken = Json::decode($decodedToken);
-#        $resourceServerId = $jsonToken;
-#        $resourceServerToken = $jsonToken[1];
+        $decodedBearerToken = Json::decode(Base64Url::decode($bearerToken));
 
-        // FIXME: unsafe comparison!
-#        if('fooid' === $resourceServerId && 'ldfj3y23o4h23o4i' === $resourceServerToken) {
+        if (!array_key_exists('i', $decodedBearerToken)) {
+            //
+        }
+        $id = $decodedBearerToken['i'];
+
+        if (!array_key_exists('s', $decodedBearerToken)) {
+            //
+        }
+        $secret = $decodedBearerToken['s'];
+
+        if (!array_key_exists($id, $this->resourceServerData)) {
+            //
+        }
+
+        // FIXME: safe string comparison!
+        if ($this->resourceServerData[$id]['secret'] !== $secret) {
+            // invalid secret
             return new TokenInfo(
-                array('active' => true)
+                array('active' => false)
             );
-#        }
-#        return new TokenInfo(
-#            array('active' => false)
-#        );
+        }
+
+        // valid secret
+        return new TokenInfo(
+            array('active' => true)
+        );
     }
 }

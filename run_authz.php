@@ -153,7 +153,7 @@ class IndieCertTest
 }
 
 try {
-    $i = new IndieCertTest('https://localhost/oauth', 'foo@example.org', 'eyJmb29pZCI6ImxkZmozeTIzbzRoMjNvNGkifQ', 'post');
+    $i = new IndieCertTest('https://localhost/oauth', 'foo@example.org', 'eyJpIjoiZm9vIiwicyI6InNlY3JldCJ9', 'post');
     $i->runAuthorization();
 } catch (Exception $e) {
     echo $e->getMessage();

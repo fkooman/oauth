@@ -30,7 +30,7 @@ $basicAuthentication = new BasicAuthentication(
     )
 );
 
-$bearerAuthentication = new BearerAuthentication(new ResourceServerValidator());
+$bearerAuthentication = new BearerAuthentication(new ResourceServerValidator(dirname(__DIR__).'/config/resource_servers.json'));
 
 $authenticationPlugin = new AuthenticationPlugin();
 $authenticationPlugin->registerAuthenticationPlugin($basicAuthentication, 'user');
