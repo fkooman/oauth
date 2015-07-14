@@ -7,7 +7,7 @@ use fkooman\Json\Json;
 
 echo Base64Url::encode(Json::encode(
     array(
-        'i' => 'foo',
-        's' => 'secret',
+        'i' => $argv[1],
+        's' => $argv[2],
     )
 )).PHP_EOL;
