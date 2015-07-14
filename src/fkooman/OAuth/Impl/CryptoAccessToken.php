@@ -3,21 +3,18 @@
 namespace fkooman\OAuth\Impl;
 
 use fkooman\Crypto\Symmetric;
+use fkooman\Crypto\Key;
 use fkooman\OAuth\AccessTokenInterface;
 use fkooman\Json\Json;
 
 class CryptoAccessToken implements AccessTokenInterface
 {
-    /** @var string */
-    private $encryptKey;
+    /** @var \fkooman\Crypto\Symmetric */
+    private $symmetric;
 
-    /** @var string */
-    private $signKey;
-
-    public function __construct($encryptKey, $signKey)
+    public function __construct(Key $key)
     {
-        $this->encryptKey = $encryptKey;
-        $this->signKey = $signKey;
+        $this->symmetric = new Symmetric($key);
     }
 
     public function create($userId, $issuedAt, $redirectUri, $scope)
@@ -34,16 +31,13 @@ class CryptoAccessToken implements AccessTokenInterface
             'scope' => $scope,
         );
 
-        $crypto = new Symmetric($this->encryptKey, $this->signKey);
-
-        return $crypto->encrypt(Json::encode($payload));
+        return $this->symmetric->encrypt(Json::encode($payload));
     }
 
     public function validate($token)
     {
         // FIXME: catch situation where signature not matches and return false instead
-        $crypto = new Symmetric($this->encryptKey, $this->signKey);
 
-        return Json::decode($crypto->decrypt($token), true);
+        return Json::decode($this->symmetric->decrypt($token), true);
     }
 }

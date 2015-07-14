@@ -99,7 +99,7 @@ class OAuthServer
         return $response;
     }
 
-    public function postIntrospect(Request $request)
+    public function postIntrospect(Request $request, UserInfoInterface $userInfo)
     {
         // FIXME: must be Bearer authenticated
         $p = RequestValidation::validateIntrospectRequest($request);
