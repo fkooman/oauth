@@ -49,12 +49,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-lib-crypto.git",
-                "reference": "63c7c2dd9ddcfa9859f6cf26556f6741b5734336"
+                "reference": "979e9c9f1caf0c580ae2de24d15483a8328fa0c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-crypto/zipball/63c7c2dd9ddcfa9859f6cf26556f6741b5734336",
-                "reference": "63c7c2dd9ddcfa9859f6cf26556f6741b5734336",
+                "url": "https://api.github.com/repos/fkooman/php-lib-crypto/zipball/979e9c9f1caf0c580ae2de24d15483a8328fa0c5",
+                "reference": "979e9c9f1caf0c580ae2de24d15483a8328fa0c5",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
                 }
             ],
             "description": "A simple encryption and decryption library",
-            "time": "2015-07-14 11:45:55"
+            "time": "2015-07-15 11:06:16"
         },
         {
             "name": "fkooman/ini",
