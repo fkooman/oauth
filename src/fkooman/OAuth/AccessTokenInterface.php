@@ -7,7 +7,7 @@ interface AccessTokenInterface
     /**
      * Create an access_token.
      *
-     * @param string $userId      the user identifiero
+     * @param string $userId      the user identifier
      * @param int    $issuedAt    the issue time (epoch)
      * @param string $redirectUri the redirect_uri of the client
      * @param string $scope       the scope requested by the client

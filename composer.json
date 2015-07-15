@@ -22,6 +22,7 @@
         "fkooman/rest": "^0.9.0",
         "fkooman/rest-plugin-basic": "^0.6.1",
         "twig/twig": "^1.18",
-        "guzzlehttp/guzzle": "^5.3"
+        "guzzlehttp/guzzle": "^5.3",
+        "fkooman/json": "^1.0"
     }
 }

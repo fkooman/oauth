@@ -101,28 +101,20 @@ class OAuthServer
 
     public function postIntrospect(Request $request, UserInfoInterface $userInfo)
     {
-        // FIXME: must be Bearer authenticated
         $p = RequestValidation::validateIntrospectRequest($request);
         $accessToken = $this->accessToken->validate($p['token']);
 
         // FIXME: make sure it actually is valid!
 
-        // get the fields for introspection http://tools.ietf.org/html/draft-ietf-oauth-introspection-11
-
-
-        $introspectionResponse = array(
-            'active' => true,
-            'scope' => $accessToken['scope'],
-            'token_type' => 'bearer',
-            'iat' => $accessToken['iat'],
-            'sub' => $accessToken['user_id'],
-            //'username' => $accessToken['username'],
-        );
-
         $response = new JsonResponse();
-        // FIXME: caching headers
         $response->setBody(
-            $introspectionResponse
+            array(
+                'active' => true,
+                'scope' => $accessToken['scope'],
+                'token_type' => 'bearer',
+                'iat' => $accessToken['iat'],
+                'sub' => $accessToken['user_id'],
+            )
         );
 
         return $response;
