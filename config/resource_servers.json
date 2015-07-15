@@ -1,5 +1,6 @@
 {
-    "foo": {
-        "secret": "secret"
-    }
+    "my_resource_server": {
+        "secret": "my_secret"
+        "scope": "post"
+    },
 }

@@ -10,14 +10,12 @@ class IndieCertTest
 {
     private $instanceUrl;
     private $me;
-    private $introspectCredential;
     private $scope;
 
-    public function __construct($instanceUrl, $me, $introspectCredential, $scope = 'post')
+    public function __construct($instanceUrl, $me, $scope = 'post')
     {
         $this->instanceUrl = $instanceUrl;
         $this->me = $me;
-        $this->introspectCredential = $introspectCredential;
         $this->scope = $scope;
     }
 
@@ -127,8 +125,8 @@ class IndieCertTest
             array(
                 'headers' => array(
                     'Accept' => 'application/json',
-                    'Authorization' => sprintf('Bearer %s', $this->introspectCredential),
                 ),
+        'auth' => array('my_resource_server', 'my_secret'),
                 'body' => array(
                     'token' => $accessToken,
                 ),
@@ -153,7 +151,7 @@ class IndieCertTest
 }
 
 try {
-    $i = new IndieCertTest('https://localhost/oauth', 'foo@example.org', 'eyJpIjoiZm9vIiwicyI6InNlY3JldCJ9', 'post');
+    $i = new IndieCertTest('https://localhost/oauth', 'foo@example.org', 'post');
     $i->runAuthorization();
 } catch (Exception $e) {
     echo $e->getMessage();

@@ -8,10 +8,8 @@ use fkooman\Rest\ExceptionHandler;
 use fkooman\Rest\Plugin\Authentication\AuthenticationPlugin;
 use fkooman\Rest\Plugin\Authentication\UserInfoInterface;
 use fkooman\Rest\Plugin\Basic\BasicAuthentication;
-use fkooman\Rest\Plugin\Bearer\BearerAuthentication;
 use fkooman\Http\Request;
 use fkooman\OAuth\OAuthServer;
-use fkooman\OAuth\ResourceServerValidator;
 use fkooman\OAuth\Impl\TwigTemplateManager;
 use fkooman\OAuth\Impl\CryptoAuthorizationCode;
 use fkooman\OAuth\Impl\CryptoAccessToken;
@@ -21,20 +19,38 @@ ExceptionHandler::register();
 
 $service = new Service();
 
-$basicAuthentication = new BasicAuthentication(
+// for user authentication
+$userAuthentication = new BasicAuthentication(
     function ($userName) {
-        return password_hash('adm1n', PASSWORD_DEFAULT);
+        if ('admin' === $userName) {
+            return password_hash('adm1n', PASSWORD_DEFAULT);
+        } elseif ('fkooman' === $userName) {
+            return password_hash('foobar', PASSWORD_DEFAULT);
+        }
     },
     array(
         'realm' => 'OAuth',
     )
 );
 
-$bearerAuthentication = new BearerAuthentication(new ResourceServerValidator(dirname(__DIR__).'/config/resource_servers.json'));
+// for resource server authentication
+$resourceServerAuthentication = new BasicAuthentication(
+    function ($resourceServerId) {
+        return password_hash('my_secret', PASSWORD_DEFAULT);
+#        $resourceServerData = Json::decodeFile(dirname(__DIR__).'/config/resource_servers.json');
+#        if(array_key_exists($resourceServerId, $resourceServerData)) {
+#            return password_hash($resourceServerData[$resourceServerId]['secret'], PASSWORD_DEFAULT);
+#        }
+#        return false;
+    },
+    array(
+        'realm' => 'OAuth',
+    )
+);
 
 $authenticationPlugin = new AuthenticationPlugin();
-$authenticationPlugin->registerAuthenticationPlugin($basicAuthentication, 'user');
-$authenticationPlugin->registerAuthenticationPlugin($bearerAuthentication, 'resource_server');
+$authenticationPlugin->registerAuthenticationPlugin($userAuthentication, 'user');
+$authenticationPlugin->registerAuthenticationPlugin($resourceServerAuthentication, 'resource_server');
 
 $pluginRegistry = new PluginRegistry();
 $pluginRegistry->registerDefaultPlugin($authenticationPlugin);
@@ -92,7 +108,6 @@ $service->post(
     function (Request $request, UserInfoInterface $userInfo) use ($o) {
         return $o->postIntrospect($request, $userInfo);
     },
-    // FIXME: this one must use Bearer!
     array(
         'fkooman\Rest\Plugin\Authentication\AuthenticationPlugin' => array(
             'only' => 'resource_server',
