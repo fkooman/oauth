@@ -5,7 +5,7 @@ require_once dirname(__DIR__).'/vendor/autoload.php';
 use fkooman\Rest\Service;
 use fkooman\Rest\PluginRegistry;
 use fkooman\Rest\ExceptionHandler;
-use fkooman\Rest\Plugin\Authentication\AuthenticationPlugin;
+use fkooman\OAuth\AuthenticationPlugin;
 use fkooman\Rest\Plugin\Authentication\UserInfoInterface;
 use fkooman\Rest\Plugin\Basic\BasicAuthentication;
 use fkooman\Http\Request;
@@ -14,6 +14,7 @@ use fkooman\OAuth\Impl\TwigTemplateManager;
 use fkooman\OAuth\Impl\CryptoAuthorizationCode;
 use fkooman\OAuth\Impl\CryptoAccessToken;
 use fkooman\Crypto\Key;
+use fkooman\Json\Json;
 
 ExceptionHandler::register();
 
@@ -36,12 +37,12 @@ $userAuthentication = new BasicAuthentication(
 // for resource server authentication
 $resourceServerAuthentication = new BasicAuthentication(
     function ($resourceServerId) {
-        return password_hash('my_secret', PASSWORD_DEFAULT);
-#        $resourceServerData = Json::decodeFile(dirname(__DIR__).'/config/resource_servers.json');
-#        if(array_key_exists($resourceServerId, $resourceServerData)) {
-#            return password_hash($resourceServerData[$resourceServerId]['secret'], PASSWORD_DEFAULT);
-#        }
-#        return false;
+        $resourceServerData = Json::decodeFile(dirname(__DIR__).'/config/resource_servers.json');
+        if (array_key_exists($resourceServerId, $resourceServerData)) {
+            return password_hash($resourceServerData[$resourceServerId]['secret'], PASSWORD_DEFAULT);
+        }
+
+        return false;
     },
     array(
         'realm' => 'OAuth',
@@ -71,7 +72,7 @@ $service->get(
         return $o->getAuthorize($request, $userInfo);
     },
     array(
-        'fkooman\Rest\Plugin\Authentication\AuthenticationPlugin' => array(
+        'fkooman\OAuth\AuthenticationPlugin' => array(
             'only' => 'user',
         ),
     )
@@ -83,7 +84,7 @@ $service->post(
         return $o->postAuthorize($request, $userInfo);
     },
     array(
-        'fkooman\Rest\Plugin\Authentication\AuthenticationPlugin' => array(
+        'fkooman\OAuth\AuthenticationPlugin' => array(
             'only' => 'user',
         ),
     )
@@ -96,8 +97,8 @@ $service->post(
         return $o->postToken($request);
     },
     array(
-        'fkooman\Rest\Plugin\Authentication\AuthenticationPlugin' => array(
-            //'only' => array('fkooman\Rest\Plugin\Basic\BasicAuthentication'),
+        'fkooman\OAuth\AuthenticationPlugin' => array(
+            //'only' => 'client',
             'enabled' => false,
         ),
     )
@@ -109,7 +110,7 @@ $service->post(
         return $o->postIntrospect($request, $userInfo);
     },
     array(
-        'fkooman\Rest\Plugin\Authentication\AuthenticationPlugin' => array(
+        'fkooman\OAuth\AuthenticationPlugin' => array(
             'only' => 'resource_server',
         ),
     )

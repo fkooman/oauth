@@ -1,6 +1,6 @@
 {
     "my_resource_server": {
+        "scope": "post",
         "secret": "my_secret"
-        "scope": "post"
-    },
+    }
 }
