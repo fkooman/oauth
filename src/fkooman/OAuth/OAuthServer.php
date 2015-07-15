@@ -75,8 +75,11 @@ class OAuthServer
         $p = RequestValidation::validateTokenRequest($request);
         $authorizationCode = $this->authorizationCode->validate($p['code']);
 
+        $iat = $authorizationCode['iat'];
+        if(time() > $iat + 600) {
+            throw new BadRequest('authorization code expired');
+        }
         // FIXME: values in code should match values from this request!
-        // FIXME: check for expired code! >= 10 minutes old
         // FIXME: keep log of used codes (must not allowed to be replayed)
 
         // create an access token
@@ -88,7 +91,8 @@ class OAuthServer
         );
 
         $response = new JsonResponse();
-        // FIXME: caching headers
+        $response->setHeader('Cache-Control', 'no-store');
+        $response->setHeader('Pragma', 'no-cache');
         $response->setBody(
             array(
                 'access_token' => $accessToken,
