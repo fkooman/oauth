@@ -36,6 +36,17 @@ class RequestValidation
         );
     }
 
+    public static function validatePostAuthorizeRequest(Request $request)
+    {
+        $requestData = self::validateAuthorizeRequest($request);
+
+        // approval
+        // FIXME: must only be yes or no
+        $requestData['approval'] = $request->getPostParameter('approval');
+
+        return $requestData;
+    }
+
     public static function validateTokenRequest(Request $request)
     {
         // code

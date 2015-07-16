@@ -35,16 +35,14 @@ class OAuthServer
 
     public function getAuthorize(Request $request, UserInfoInterface $userInfo)
     {
-        RequestValidation::validateAuthorizeRequest($request);
-        $redirectUri = $request->getUrl()->getQueryParameter('redirect_uri');
-        $scope = $request->getUrl()->getQueryParameter('scope');
+        $authorizeRequest = RequestValidation::validateAuthorizeRequest($request);
 
         // show the approval dialog
         return $this->templateManager->render(
             'getAuthorize',
             array(
-                'redirect_uri' => $redirectUri,
-                'scope' => $scope,
+                'redirect_uri' => $authorizeRequest['redirect_uri'],
+                'scope' => $authorizeRequest['scope'],
                 'request_url' => $request->getUrl()->toString(),
             )
         );
@@ -53,29 +51,28 @@ class OAuthServer
     public function postAuthorize(Request $request, UserInfoInterface $userInfo)
     {
         // FIXME: referrer url MUST be request URL?
-        $authorizeRequest = RequestValidation::validateAuthorizeRequest($request);
+        $postAuthorizeRequest = RequestValidation::validatePostAuthorizeRequest($request);
 
-        $approval = $request->getPostParameter('approval');
-        if ('yes' === $approval) {
+        if ('yes' === $postAuthorizeRequest['approval']) {
             $code = $this->authorizationCode->store(
                 new AuthorizationCode(
                     $userInfo->getUserId(),
                     $this->io->getTime(),
-                    $authorizeRequest['redirect_uri'],
-                    $authorizeRequest['scope']
+                    $postAuthorizeRequest['redirect_uri'],
+                    $postAuthorizeRequest['scope']
                 )
             );
 
             return new RedirectResponse(
                 // FIXME: append, not just simply add
-                $authorizeRequest['redirect_uri'].'?code='.$code.'&state='.$authorizeRequest['state'],
+                $postAuthorizeRequest['redirect_uri'].'?code='.$code.'&state='.$postAuthorizeRequest['state'],
                 302
             );
         }
 
         // not approved
         return new RedirectResponse(
-            $authorizeRequest['redirect_uri'].'?error=XXX&state='.$authorizeRequest['state'],
+            $postAuthorizeRequest['redirect_uri'].'?error=XXX&state='.$postAuthorizeRequest['state'],
             302
         );
     }
