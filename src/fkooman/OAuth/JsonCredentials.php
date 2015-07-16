@@ -3,7 +3,6 @@
 namespace fkooman\OAuth;
 
 use fkooman\Json\Json;
-use RuntimeException;
 
 class JsonCredentials
 {

@@ -17,6 +17,7 @@ use fkooman\Crypto\Key;
 use fkooman\Json\Json;
 use fkooman\OAuth\JsonCredentials;
 use fkooman\Ini\IniReader;
+use fkooman\OAuth\Impl\NoRegistrationClient;
 
 ExceptionHandler::register();
 
@@ -63,6 +64,7 @@ $key = Key::load($iniReader->v('Security', 'Key'));
 
 $o = new OAuthServer(
     new TwigTemplateManager(),
+    new NoRegistrationClient(),
     new CryptoAuthorizationCode($key),
     new CryptoAccessToken($key)
 );

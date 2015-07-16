@@ -13,6 +13,9 @@ class OAuthServer
     /** @var TemplateInterface */
     private $templateManager;
 
+    /** @var ClientInterface */
+    private $client;
+
     /** @var AuthorizationCodeInterface */
     private $authorizationCode;
 
@@ -22,9 +25,10 @@ class OAuthServer
     /** @var IO */
     private $io;
 
-    public function __construct(TemplateInterface $templateManager, AuthorizationCodeInterface $authorizationCode, AccessTokenInterface $accessToken, IO $io = null)
+    public function __construct(TemplateInterface $templateManager, ClientInterface $client, AuthorizationCodeInterface $authorizationCode, AccessTokenInterface $accessToken, IO $io = null)
     {
         $this->templateManager = $templateManager;
+        $this->client = $client;
         $this->authorizationCode = $authorizationCode;
         $this->accessToken = $accessToken;
         if (null === $io) {
@@ -37,12 +41,22 @@ class OAuthServer
     {
         $authorizeRequest = RequestValidation::validateAuthorizeRequest($request);
 
+        $clientInfo = $this->client->getClient(
+            $authorizeRequest['client_id'],
+            $authorizeRequest['redirect_uri'],
+            $authorizeRequest['scope']
+        );
+        if (false === $clientInfo) {
+            throw new BadRequestException('client does not exist');
+        }
+
         // show the approval dialog
         return $this->templateManager->render(
             'getAuthorize',
             array(
-                'redirect_uri' => $authorizeRequest['redirect_uri'],
-                'scope' => $authorizeRequest['scope'],
+                'client_id' => $clientInfo->getClientId(),
+                'redirect_uri' => $clientInfo->getRedirectUri(),
+                'scope' => $clientInfo->getScope(),
                 'request_url' => $request->getUrl()->toString(),
             )
         );

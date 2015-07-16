@@ -8,7 +8,7 @@ try {
             sprintf('SYNTAX: %s [secret]', $argv[0])
         );
     }
-    echo password_hash($argv[1], PASSWORD_DEFAULT) . PHP_EOL;
+    echo password_hash($argv[1], PASSWORD_DEFAULT).PHP_EOL;
 } catch (Exception $e) {
     echo $e->getMessage().PHP_EOL;
     exit(1);

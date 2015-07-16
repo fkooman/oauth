@@ -4,6 +4,11 @@ namespace fkooman\OAuth;
 
 class InputValidation
 {
+    public static function clientId($clientId)
+    {
+        return $clientId;
+    }
+
     public static function redirectUri($redirectUri)
     {
         #   The redirection endpoint URI MUST be an absolute URI as defined by

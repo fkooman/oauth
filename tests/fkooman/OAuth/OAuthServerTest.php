@@ -25,6 +25,7 @@ use PHPUnit_Framework_TestCase;
 use fkooman\OAuth\Impl\TestTemplateManager;
 use fkooman\OAuth\Impl\TestAuthorizationCode;
 use fkooman\OAuth\Impl\TestAccessToken;
+use fkooman\OAuth\Impl\NoRegistrationClient;
 use fkooman\Http\Request;
 
 class OAuthServerTest extends PHPUnit_Framework_TestCase
@@ -49,6 +50,7 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
 
         $this->oauthServer = new OAuthServer(
             $testTemplateManager,
+            new NoRegistrationClient(),
             $testAuthorizationCode,
             $testAccessToken,
             $io
@@ -58,6 +60,7 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
     public function testGetAuthorize()
     {
         $query = array(
+            'client_id' => 'https://localhost',
             'redirect_uri' => 'https://localhost/cb',
             'state' => '12345',
             'scope' => 'post',
@@ -67,9 +70,10 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
         $this->assertSame(
             array(
                 'getAuthorize' => array(
+                    'client_id' => 'https://localhost',
                     'redirect_uri' => 'https://localhost/cb',
                     'scope' => 'post',
-                    'request_url' => 'https://oauth.example/authorize?redirect_uri=https%3A%2F%2Flocalhost%2Fcb&state=12345&scope=post',
+                    'request_url' => 'https://oauth.example/authorize?client_id=https%3A%2F%2Flocalhost&redirect_uri=https%3A%2F%2Flocalhost%2Fcb&state=12345&scope=post',
                 ),
             ),
             $this->oauthServer->getAuthorize($request, $this->userInfo)

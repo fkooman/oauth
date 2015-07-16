@@ -9,6 +9,12 @@ class RequestValidation
 {
     public static function validateAuthorizeRequest(Request $request)
     {
+        // client_id
+        $clientId = $request->getUrl()->getQueryParameter('client_id');
+        if (false === InputValidation::clientId($clientId)) {
+            throw new BadRequestException('invalid client_id');
+        }
+
         // redirect_uri
         $redirectUri = $request->getUrl()->getQueryParameter('redirect_uri');
         if (false === InputValidation::redirectUri($redirectUri)) {
@@ -30,6 +36,7 @@ class RequestValidation
         }
 
         return array(
+            'client_id' => $clientId,
             'redirect_uri' => $redirectUri,
             'scope' => $scope,
             'state' => $state,
