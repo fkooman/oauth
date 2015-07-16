@@ -59,5 +59,24 @@ The `secret` field is the output of `password_hash()`. You can use the script
 resource server.
 
 ## Clients
-Currently no client registration implemented.
+Currently no client registration implemented. Only the `authorization code` 
+flow is implemented.
+
+# Endpoints
+There are three endpoints defined:
+* `/authorize`
+* `/token`
+* `/introspect`
+
+The OAuth clients will use the `/authorize` and `/token` endpoints. The 
+protocol is described in [RFC 6749](https://tools.ietf.org/html/rfc6749).
+
+## Introspection
+Resource servers will use the `/introspect` endpoint to validate the access 
+tokens used by the clients. Resource servers need to be registered and use 
+Basic authentication to validate access tokens. 
+
+This protocol is described in 
+[draft-ietf-oauth-introspection-11.txt](https://tools.ietf.org/html/draft-ietf-oauth-introspection).
+
 
