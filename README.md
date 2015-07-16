@@ -59,8 +59,10 @@ The `secret` field is the output of `password_hash()`. You can use the script
 resource server.
 
 ## Clients
-Currently no client registration implemented. Only the `authorization code` 
-flow is implemented.
+Currently no client registration implemented. Only the 
+"Authorization Code Grant" 
+([section 4.1 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-4.1)) 
+is implemented.
 
 # Endpoints
 There are three endpoints defined:
