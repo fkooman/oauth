@@ -27,8 +27,9 @@ Place this in `/etc/httpd/conf.d/oauth.conf`:
 
 # Configuration
 ## Server
-To generate a key for use in `config/server.ini`. You can use 
-the script `bin/generateKey.php` to generate a key.
+The server configuration is done in `config/server.ini`. 
+
+You can use the script `bin/generateKey.php` to generate a key.
 
 ## Users
 Currently only Basic authentication is supported for user authentication. You
