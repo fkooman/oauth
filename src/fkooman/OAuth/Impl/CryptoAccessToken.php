@@ -7,6 +7,7 @@ use fkooman\Crypto\Key;
 use fkooman\OAuth\AccessTokenInterface;
 use fkooman\Json\Json;
 use fkooman\OAuth\AccessToken;
+use Exception;
 
 class CryptoAccessToken implements AccessTokenInterface
 {
@@ -38,9 +39,13 @@ class CryptoAccessToken implements AccessTokenInterface
     public function retrieve($accessToken)
     {
         // FIXME: catch situation where signature not matches and return false instead
-
-        return AccessToken::fromArray(
-            Json::decode($this->symmetric->decrypt($accessToken), true)
-        );
+        try { 
+            return AccessToken::fromArray(
+                Json::decode($this->symmetric->decrypt($accessToken), true)
+            );
+        } catch (Exception $e) {
+            // if anything goes wrong, just return false
+            return false;
+        }
     }
 }

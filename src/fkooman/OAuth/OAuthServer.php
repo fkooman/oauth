@@ -45,7 +45,7 @@ class OAuthServer
     public function postAuthorize(Request $request, UserInfoInterface $userInfo)
     {
         // FIXME: referrer url MUST be request URL?
-        $p = RequestValidation::validateAuthorizeRequest($request);
+        $authorizeRequest = RequestValidation::validateAuthorizeRequest($request);
 
         $approval = $request->getPostParameter('approval');
         if ('yes' === $approval) {
@@ -53,29 +53,29 @@ class OAuthServer
                 new AuthorizationCode(
                     $userInfo->getUserId(),
                     time(),
-                    $p['redirect_uri'],
-                    $p['scope']
+                    $authorizeRequest['redirect_uri'],
+                    $authorizeRequest['scope']
                 )
             );
 
             return new RedirectResponse(
                 // FIXME: append, not just simply add
-                $p['redirect_uri'].'?code='.$code.'&state='.$p['state'],
+                $authorizeRequest['redirect_uri'].'?code='.$code.'&state='.$authorizeRequest['state'],
                 302
             );
         }
 
         // not approved
         return new RedirectResponse(
-            $p['redirect_uri'].'?error=XXX&state='.$p['state'],
+            $authorizeRequest['redirect_uri'].'?error=XXX&state='.$authorizeRequest['state'],
             302
         );
     }
 
     public function postToken(Request $request)
     {
-        $p = RequestValidation::validateTokenRequest($request);
-        $authorizationCode = $this->authorizationCode->retrieve($p['code']);
+        $tokenRequest = RequestValidation::validateTokenRequest($request);
+        $authorizationCode = $this->authorizationCode->retrieve($tokenRequest['code']);
 
         $iat = $authorizationCode->getIssuedAt();
         if (time() > $iat + 600) {
@@ -110,21 +110,25 @@ class OAuthServer
 
     public function postIntrospect(Request $request, UserInfoInterface $userInfo)
     {
-        $p = RequestValidation::validateIntrospectRequest($request);
-        $accessToken = $this->accessToken->retrieve($p['token']);
+        $introspectRequest = RequestValidation::validateIntrospectRequest($request);
+        $accessToken = $this->accessToken->retrieve($introspectRequest['token']);
 
-        // FIXME: make sure it actually is valid!
-
-        $response = new JsonResponse();
-        $response->setBody(
-            array(
+        if(false === $accessToken) {
+            $body = array(
+                'active' => false
+            );
+        } else {
+            $body = array(
                 'active' => true,
                 'scope' => $accessToken->getScope(),
                 'token_type' => 'bearer',
                 'iat' => $accessToken->getIssuedAt(),
                 'sub' => $accessToken->getUserId(),
-            )
-        );
+            );
+        }
+
+        $response = new JsonResponse();
+        $response->setBody($body);
 
         return $response;
     }

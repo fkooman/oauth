@@ -7,6 +7,7 @@ use fkooman\Crypto\Key;
 use fkooman\OAuth\AuthorizationCodeInterface;
 use fkooman\Json\Json;
 use fkooman\OAuth\AuthorizationCode;
+use Exception;
 
 class CryptoAuthorizationCode implements AuthorizationCodeInterface
 {
@@ -39,8 +40,13 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
     {
         // FIXME: protection against replaying must be implemented somewhere,
         // maybe here??
-        return AuthorizationCode::fromArray(
-            Json::decode($this->symmetric->decrypt($authorizationCode), true)
-        );
+        try { 
+            return AuthorizationCode::fromArray(
+                Json::decode($this->symmetric->decrypt($authorizationCode), true)
+            );
+        } catch (Exception $e) {
+            // if anything goes wrong, just return false
+            return false;
+        }
     }
 }
