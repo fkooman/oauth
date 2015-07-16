@@ -5,22 +5,24 @@ namespace fkooman\OAuth;
 interface AccessTokenInterface
 {
     /**
-     * Create an access_token.
+     * Store an access token.
      *
-     * @param string $userId      the user identifier
-     * @param int    $issuedAt    the issue time (epoch)
-     * @param string $redirectUri the redirect_uri of the client
-     * @param string $scope       the scope requested by the client
+     * @param AccessToken $accessToken the access token to store
+     *
+     * @return string the access token that will be provided to the
+     *                client
      */
-    public function create($userId, $issuedAt, $redirectUri, $scope);
+    public function store(AccessToken $accessToken);
 
     /**
-     * Validate an access_token.
+     * Retrieve an access token.
      *
-     * @param string $accessToken the access_token to validate
+     * @param string $accessToken the access token received from
+     *                            the resource server
      *
-     * @return mixed the fields that were bound to the access_token as
-     *               array, or false if the access_token is invalid
+     * @return AccessToken|false the access token object if the
+     *                           access token was found, or false if it was
+     *                           not found
      */
-    public function validate($accessToken);
+    public function retrieve($accessToken);
 }

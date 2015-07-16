@@ -6,6 +6,7 @@ use fkooman\Crypto\Symmetric;
 use fkooman\Crypto\Key;
 use fkooman\OAuth\AuthorizationCodeInterface;
 use fkooman\Json\Json;
+use fkooman\OAuth\AuthorizationCode;
 
 class CryptoAuthorizationCode implements AuthorizationCodeInterface
 {
@@ -17,27 +18,29 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
         $this->symmetric = new Symmetric($key);
     }
 
-    public function create($userId, $issuedAt, $redirectUri, $scope)
+    public function store(AuthorizationCode $authorizationCode)
     {
         // generate code
         $payload = array(
-            'iat' => $issuedAt,
+            'iat' => $authorizationCode->getIssuedAt(),
             // FIXME: add nonce
-            'user_id' => $userId,
+            'user_id' => $authorizationCode->getUserId(),
 # https://tools.ietf.org/html/rfc7519#section-4.1.7
 
             'jti' => 'some_nonce_that_must_be_recorded_against_replay',
-            'redirect_uri' => $redirectUri,
-            'scope' => $scope,
+            'redirect_uri' => $authorizationCode->getRedirectUri(),
+            'scope' => $authorizationCode->getScope(),
         );
 
         return $this->symmetric->encrypt(Json::encode($payload));
     }
 
-    public function validate($code)
+    public function retrieve($authorizationCode)
     {
         // FIXME: protection against replaying must be implemented somewhere,
         // maybe here??
-        return Json::decode($this->symmetric->decrypt($code), true);
+        return AuthorizationCode::fromArray(
+            Json::decode($this->symmetric->decrypt($authorizationCode), true)
+        );
     }
 }

@@ -5,22 +5,24 @@ namespace fkooman\OAuth;
 interface AuthorizationCodeInterface
 {
     /**
-     * Create an authorization_code.
+     * Store an authorization code.
      *
-     * @param string $userId      the user identifier
-     * @param int    $issuedAt    the issue time (epoch)
-     * @param string $redirectUri the redirect_uri of the client
-     * @param string $scope       the scope requested by the client
+     * @param AuthorizationCode $authorizationCode the authorization code to
+     *                                             store
+     *
+     * @return string the authorization code that will be provided to the
+     *                client
      */
-    public function create($userId, $issuedAt, $redirectUri, $scope);
+    public function store(AuthorizationCode $authorizationCode);
 
     /**
-     * Validate an authorization_code.
+     * Retrieve an authorization code.
      *
-     * @param string $code the authorization_code to validate
+     * @param string $authorizationCode the authorization code received from
+     *                                  the client
      *
-     * @return mixed the fields that were bound to the authorization_code as
-     *               array, or false if the code is invalid
+     * @return AuthorizationCode|false the authorization code object if the
+     *                                 authorization code was found, or false if it was not found
      */
-    public function validate($code);
+    public function retrieve($authorizationCode);
 }

@@ -6,6 +6,7 @@ use fkooman\Crypto\Symmetric;
 use fkooman\Crypto\Key;
 use fkooman\OAuth\AccessTokenInterface;
 use fkooman\Json\Json;
+use fkooman\OAuth\AccessToken;
 
 class CryptoAccessToken implements AccessTokenInterface
 {
@@ -17,27 +18,29 @@ class CryptoAccessToken implements AccessTokenInterface
         $this->symmetric = new Symmetric($key);
     }
 
-    public function create($userId, $issuedAt, $redirectUri, $scope)
+    public function store(AccessToken $accessToken)
     {
         // generate code
         $payload = array(
-            'iat' => $issuedAt,
+            'iat' => $accessToken->getIssuedAt(),
             // FIXME: add nonce
 
 # https://tools.ietf.org/html/rfc7519#section-4.1.7
-            'user_id' => $userId,
+            'user_id' => $accessToken->getUserId(),
             'jti' => 'some_nonce_that_must_be_recorded_against_replay',
-            'redirect_uri' => $redirectUri,
-            'scope' => $scope,
+            'redirect_uri' => $accessToken->getRedirectUri(),
+            'scope' => $accessToken->getScope(),
         );
 
         return $this->symmetric->encrypt(Json::encode($payload));
     }
 
-    public function validate($token)
+    public function retrieve($accessToken)
     {
         // FIXME: catch situation where signature not matches and return false instead
 
-        return Json::decode($this->symmetric->decrypt($token), true);
+        return AccessToken::fromArray(
+            Json::decode($this->symmetric->decrypt($accessToken), true)
+        );
     }
 }

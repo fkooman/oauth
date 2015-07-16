@@ -49,11 +49,13 @@ class OAuthServer
 
         $approval = $request->getPostParameter('approval');
         if ('yes' === $approval) {
-            $code = $this->authorizationCode->create(
-                $userInfo->getUserId(),
-                time(),
-                $p['redirect_uri'],
-                $p['scope']
+            $code = $this->authorizationCode->store(
+                new AuthorizationCode(
+                    $userInfo->getUserId(),
+                    time(),
+                    $p['redirect_uri'],
+                    $p['scope']
+                )
             );
 
             return new RedirectResponse(
@@ -73,21 +75,24 @@ class OAuthServer
     public function postToken(Request $request)
     {
         $p = RequestValidation::validateTokenRequest($request);
-        $authorizationCode = $this->authorizationCode->validate($p['code']);
+        $authorizationCode = $this->authorizationCode->retrieve($p['code']);
 
-        $iat = $authorizationCode['iat'];
+        $iat = $authorizationCode->getIssuedAt();
         if (time() > $iat + 600) {
             throw new BadRequest('authorization code expired');
         }
         // FIXME: values in code should match values from this request!
+        // FIXME: the scope could be less than authorized!
         // FIXME: keep log of used codes (must not allowed to be replayed)
 
         // create an access token
-        $accessToken = $this->accessToken->create(
-            $authorizationCode['user_id'],
-            time(),
-            $authorizationCode['redirect_uri'],
-            $authorizationCode['scope']
+        $accessToken = $this->accessToken->store(
+            new AccessToken(
+                $authorizationCode->getUserId(),
+                time(),
+                $authorizationCode->getRedirectUri(),
+                $authorizationCode->getScope()
+            )
         );
 
         $response = new JsonResponse();
@@ -96,7 +101,7 @@ class OAuthServer
         $response->setBody(
             array(
                 'access_token' => $accessToken,
-                'scope' => $authorizationCode['scope'],
+                'scope' => $authorizationCode->getScope(),
             )
         );
 
@@ -106,7 +111,7 @@ class OAuthServer
     public function postIntrospect(Request $request, UserInfoInterface $userInfo)
     {
         $p = RequestValidation::validateIntrospectRequest($request);
-        $accessToken = $this->accessToken->validate($p['token']);
+        $accessToken = $this->accessToken->retrieve($p['token']);
 
         // FIXME: make sure it actually is valid!
 
@@ -114,10 +119,10 @@ class OAuthServer
         $response->setBody(
             array(
                 'active' => true,
-                'scope' => $accessToken['scope'],
+                'scope' => $accessToken->getScope(),
                 'token_type' => 'bearer',
-                'iat' => $accessToken['iat'],
-                'sub' => $accessToken['user_id'],
+                'iat' => $accessToken->getIssuedAt(),
+                'sub' => $accessToken->getUserId(),
             )
         );
 
