@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/fkooman/oauth.svg)](https://travis-ci.org/fkooman/oauth)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/fkooman/oauth/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/fkooman/oauth/?branch=master)
 
 # Introduction
