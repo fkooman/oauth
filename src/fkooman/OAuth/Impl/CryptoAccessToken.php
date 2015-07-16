@@ -39,7 +39,7 @@ class CryptoAccessToken implements AccessTokenInterface
     public function retrieve($accessToken)
     {
         // FIXME: catch situation where signature not matches and return false instead
-        try { 
+        try {
             return AccessToken::fromArray(
                 Json::decode($this->symmetric->decrypt($accessToken), true)
             );

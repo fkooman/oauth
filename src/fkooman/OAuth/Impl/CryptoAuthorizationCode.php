@@ -40,7 +40,7 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
     {
         // FIXME: protection against replaying must be implemented somewhere,
         // maybe here??
-        try { 
+        try {
             return AuthorizationCode::fromArray(
                 Json::decode($this->symmetric->decrypt($authorizationCode), true)
             );

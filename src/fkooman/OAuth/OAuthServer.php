@@ -6,6 +6,7 @@ use fkooman\Rest\Plugin\Authentication\UserInfoInterface;
 use fkooman\Http\Request;
 use fkooman\Http\RedirectResponse;
 use fkooman\Http\JsonResponse;
+use fkooman\Http\Exception\BadRequestException;
 
 class OAuthServer
 {
@@ -18,11 +19,18 @@ class OAuthServer
     /** @var AccessTokenInterface */
     private $accessToken;
 
-    public function __construct(TemplateInterface $templateManager, AuthorizationCodeInterface $authorizationCode, AccessTokenInterface $accessToken)
+    /** @var IO */
+    private $io;
+
+    public function __construct(TemplateInterface $templateManager, AuthorizationCodeInterface $authorizationCode, AccessTokenInterface $accessToken, IO $io = null)
     {
         $this->templateManager = $templateManager;
         $this->authorizationCode = $authorizationCode;
         $this->accessToken = $accessToken;
+        if (null === $io) {
+            $io = new IO();
+        }
+        $this->io = $io;
     }
 
     public function getAuthorize(Request $request, UserInfoInterface $userInfo)
@@ -52,7 +60,7 @@ class OAuthServer
             $code = $this->authorizationCode->store(
                 new AuthorizationCode(
                     $userInfo->getUserId(),
-                    time(),
+                    $this->io->getTime(),
                     $authorizeRequest['redirect_uri'],
                     $authorizeRequest['scope']
                 )
@@ -78,8 +86,8 @@ class OAuthServer
         $authorizationCode = $this->authorizationCode->retrieve($tokenRequest['code']);
 
         $iat = $authorizationCode->getIssuedAt();
-        if (time() > $iat + 600) {
-            throw new BadRequest('authorization code expired');
+        if ($this->io->getTime() > $iat + 600) {
+            throw new BadRequestException('authorization code expired');
         }
         // FIXME: values in code should match values from this request!
         // FIXME: the scope could be less than authorized!
@@ -89,7 +97,7 @@ class OAuthServer
         $accessToken = $this->accessToken->store(
             new AccessToken(
                 $authorizationCode->getUserId(),
-                time(),
+                $this->io->getTime(),
                 $authorizationCode->getRedirectUri(),
                 $authorizationCode->getScope()
             )
@@ -113,9 +121,9 @@ class OAuthServer
         $introspectRequest = RequestValidation::validateIntrospectRequest($request);
         $accessToken = $this->accessToken->retrieve($introspectRequest['token']);
 
-        if(false === $accessToken) {
+        if (false === $accessToken) {
             $body = array(
-                'active' => false
+                'active' => false,
             );
         } else {
             $body = array(
