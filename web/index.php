@@ -16,8 +16,13 @@ use fkooman\OAuth\Impl\CryptoAccessToken;
 use fkooman\Crypto\Key;
 use fkooman\Json\Json;
 use fkooman\OAuth\JsonCredentials;
+use fkooman\Ini\IniReader;
 
 ExceptionHandler::register();
+
+$iniReader = IniReader::fromFile(
+    dirname(__DIR__).'/config/server.ini'
+);
 
 $service = new Service();
 
@@ -54,7 +59,7 @@ $pluginRegistry->registerDefaultPlugin($authenticationPlugin);
 
 $service->setPluginRegistry($pluginRegistry);
 
-$key = Key::load('eyJlIjoiNWFjMTBiNjgxYjQ1YmIwYTQxN2RjNjlhZWE0YjRmYzUiLCJzIjoiOGIzNTI3NDE0OTljMzAyODA2MzRhM2VmYTEwZWJjZGYzZGQ3ZWRhZWNjMGU1NWE5NDc1NDk1ZGE2NDVlNjJiNiJ9');
+$key = Key::load($iniReader->v('Security', 'Key'));
 
 $o = new OAuthServer(
     new TwigTemplateManager(),
