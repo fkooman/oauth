@@ -1,0 +1,8 @@
+{
+    "fkooman": {
+        "secret": "$2y$10$2hWOOSZH7TzVdXyTVJpo4OW9istG6U\/VqQQBKGMs\/THkfcGCcb6sO"
+    },
+    "admin": {
+        "secret": "$2y$10$IS\/eZddceCo6G5bwO7MXhOehjVMNGbhfsaVpZ.30gCQnRDIQi1sM6"
+    }
+}

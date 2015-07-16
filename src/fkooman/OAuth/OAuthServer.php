@@ -76,7 +76,7 @@ class OAuthServer
         $authorizationCode = $this->authorizationCode->validate($p['code']);
 
         $iat = $authorizationCode['iat'];
-        if(time() > $iat + 600) {
+        if (time() > $iat + 600) {
             throw new BadRequest('authorization code expired');
         }
         // FIXME: values in code should match values from this request!

@@ -15,6 +15,7 @@ use fkooman\OAuth\Impl\CryptoAuthorizationCode;
 use fkooman\OAuth\Impl\CryptoAccessToken;
 use fkooman\Crypto\Key;
 use fkooman\Json\Json;
+use fkooman\OAuth\JsonCredentials;
 
 ExceptionHandler::register();
 
@@ -22,12 +23,10 @@ $service = new Service();
 
 // for user authentication
 $userAuthentication = new BasicAuthentication(
-    function ($userName) {
-        if ('admin' === $userName) {
-            return password_hash('adm1n', PASSWORD_DEFAULT);
-        } elseif ('fkooman' === $userName) {
-            return password_hash('foobar', PASSWORD_DEFAULT);
-        }
+    function ($userId) {
+        $c = new JsonCredentials(dirname(__DIR__).'/config/users.json');
+
+        return $c->getSecret($userId);
     },
     array(
         'realm' => 'OAuth',
@@ -37,12 +36,9 @@ $userAuthentication = new BasicAuthentication(
 // for resource server authentication
 $resourceServerAuthentication = new BasicAuthentication(
     function ($resourceServerId) {
-        $resourceServerData = Json::decodeFile(dirname(__DIR__).'/config/resource_servers.json');
-        if (array_key_exists($resourceServerId, $resourceServerData)) {
-            return password_hash($resourceServerData[$resourceServerId]['secret'], PASSWORD_DEFAULT);
-        }
+        $c = new JsonCredentials(dirname(__DIR__).'/config/resource_servers.json');
 
-        return false;
+        return $c->getSecret($resourceServerId);
     },
     array(
         'realm' => 'OAuth',
