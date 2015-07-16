@@ -43,6 +43,15 @@ can configure users in `config/users.json`, an example file:
 The `secret` field is the output of `password_hash()`. You can use the script 
 `bin/passwordHash.php` to generate a hash for your chosen secret.
 
+## Clients
+Currently no client registration implemented. Only the 
+"Authorization Code Grant" 
+([section 4.1 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-4.1)) 
+is implemented.
+
+The client registration will be very similar to the Resource Server 
+registration.
+
 ## Resource Servers
 Add resource servers to `config/resource_servers.json`, an example file:
 
@@ -58,12 +67,6 @@ The `secret` field is the output of `password_hash()`. You can use the script
 `scope` field contain the scope valus (space separated) supported by the 
 resource server.
 
-## Clients
-Currently no client registration implemented. Only the 
-"Authorization Code Grant" 
-([section 4.1 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-4.1)) 
-is implemented.
-
 # Endpoints
 There are three endpoints defined:
 * `/authorize`
@@ -71,14 +74,8 @@ There are three endpoints defined:
 * `/introspect`
 
 The OAuth clients will use the `/authorize` and `/token` endpoints. The 
-protocol is described in [RFC 6749](https://tools.ietf.org/html/rfc6749).
-
-## Introspection
+protocol is described in [RFC 6749](https://tools.ietf.org/html/rfc6749). 
 Resource servers will use the `/introspect` endpoint to validate the access 
 tokens used by the clients. Resource servers need to be registered and use 
-Basic authentication to validate access tokens. 
-
-This protocol is described in 
+Basic authentication to validate access tokens. The protocol is described in 
 [draft-ietf-oauth-introspection-11.txt](https://tools.ietf.org/html/draft-ietf-oauth-introspection).
-
-
