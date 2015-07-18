@@ -4,8 +4,20 @@ namespace fkooman\OAuth;
 
 class InputValidation
 {
+    const VSCHAR = '/^(?:[\x20-\x7E])*$/';
+    const NQCHAR = '/^(?:\x21|[\x23-\x5B]|[\x5D-\x7E])*$/';
+
     public static function clientId($clientId)
     {
+        #   The "client_id" element is defined in Section 2.3.1:
+        #     client-id     = *VSCHAR
+
+        // I do not understand why this is not 1*VSCHAR. So the client_id
+        // parameter is allowed to be the empty string?
+        if (1 !== preg_match(self::VSCHAR, $clientId)) {
+            return false;
+        }
+
         return $clientId;
     }
 
@@ -31,6 +43,10 @@ class InputValidation
 
     public static function redirectUri($redirectUri)
     {
+        #   The "redirect_uri" element is defined in Sections 4.1.1, 4.1.3,
+        #   and 4.2.1:
+        #     redirect-uri      = URI-reference
+
         #   The redirection endpoint URI MUST be an absolute URI as defined by
         #   [RFC3986] Section 4.3.  The endpoint URI MAY include an
         #   "application/x-www-form-urlencoded" formatted (per Appendix B) query
@@ -55,27 +71,65 @@ class InputValidation
 
     public static function scope($scope)
     {
+        #   The "scope" element is defined in Section 3.3:
+        #     scope       = scope-token *( SP scope-token )
+        #     scope-token = 1*NQCHAR
+        if (1 > strlen($scope)) {
+            return false;
+        }
+        $scopeTokens = explode(' ', $scope);
+        foreach ($scopeTokens as $scopeToken) {
+            if (1 > strlen($scopeToken)) {
+                return false;
+            }
+            if (1 !== preg_match(self::NQCHAR, $scopeToken)) {
+                return false;
+            }
+        }
+
         return $scope;
     }
 
     public static function state($state)
     {
-        if (null === $state) {
+        #   The "state" element is defined in Sections 4.1.1, 4.1.2, 4.1.2.1,
+        #   4.2.1, 4.2.2, and 4.2.2.1:
+        #     state      = 1*VSCHAR
+        if (1 > strlen($state)) {
             return false;
         }
+        if (1 !== preg_match(self::VSCHAR, $state)) {
+            return false;
+        }
+
+        return $state;
     }
 
     public static function code($code)
     {
-        if (null === $code) {
+        #   The "code" element is defined in Section 4.1.3:
+        #     code       = 1*VSCHAR
+        if (1 > strlen($code)) {
             return false;
         }
+        if (1 !== preg_match(self::VSCHAR, $code)) {
+            return false;
+        }
+
+        return $code;
     }
 
     public static function token($token)
     {
-        if (null === $token) {
+        #   The "access_token" element is defined in Sections 4.2.2 and 5.1:
+        #     access-token = 1*VSCHAR
+        if (1 > strlen($token)) {
             return false;
         }
+        if (1 !== preg_match(self::VSCHAR, $token)) {
+            return false;
+        }
+
+        return $token;
     }
 }

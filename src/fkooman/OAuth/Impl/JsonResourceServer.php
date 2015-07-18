@@ -22,7 +22,7 @@ class JsonResourceServer implements ResourceServerInterface
         if (!array_key_exists($resourceServerId, $data)) {
             return false;
         }
-    
+
         // FIXME: this is not really nice... any other way?
         $data[$resourceServerId]['resource_server_id'] = $resourceServerId;
 
