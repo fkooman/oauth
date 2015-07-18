@@ -63,9 +63,15 @@ class RequestValidation
     {
         $requestData = self::validateAuthorizeRequest($request);
 
-        // approval
-        // FIXME: must only be yes or no
-        $requestData['approval'] = $request->getPostParameter('approval');
+        $approval = $request->getPostParameter('approval');
+        if (is_null($approval)) {
+            throw new BadRequestException('missing approval');
+        }
+        if (false === InputValidation::approval($approval)) {
+            throw new BadRequestException('invalid approval');
+        }
+
+        $requestData['approval'] = $approval;
 
         return $requestData;
     }

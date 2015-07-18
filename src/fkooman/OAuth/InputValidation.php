@@ -132,4 +132,13 @@ class InputValidation
 
         return $token;
     }
+
+    public static function approval($approval)
+    {
+        if ('yes' !== $approval && 'no' !== $approval) {
+            return false;
+        }
+
+        return $approval;
+    }
 }
