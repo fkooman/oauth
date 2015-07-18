@@ -16,6 +16,9 @@ class OAuthServer
     /** @var ClientInterface */
     private $client;
 
+    /** @var ResourceServer */
+    private $resourceServer;
+
     /** @var AuthorizationCodeInterface */
     private $authorizationCode;
 
@@ -25,10 +28,11 @@ class OAuthServer
     /** @var IO */
     private $io;
 
-    public function __construct(TemplateInterface $templateManager, ClientInterface $client, AuthorizationCodeInterface $authorizationCode, AccessTokenInterface $accessToken, IO $io = null)
+    public function __construct(TemplateInterface $templateManager, ClientInterface $client, ResourceServerInterface $resourceServer, AuthorizationCodeInterface $authorizationCode, AccessTokenInterface $accessToken, IO $io = null)
     {
         $this->templateManager = $templateManager;
         $this->client = $client;
+        $this->resourceServer = $resourceServer;
         $this->authorizationCode = $authorizationCode;
         $this->accessToken = $accessToken;
         if (null === $io) {
@@ -145,6 +149,9 @@ class OAuthServer
     {
         $introspectRequest = RequestValidation::validateIntrospectRequest($request);
         $accessToken = $this->accessToken->retrieve($introspectRequest['token']);
+
+        // FIXME: also check if the RS authenticating is the audientce, or at
+        // least if it supports the scopes granted by the user...
 
         if (false === $accessToken) {
             $body = array(

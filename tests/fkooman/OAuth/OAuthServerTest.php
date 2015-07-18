@@ -38,12 +38,21 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $this->userInfo = $this->getMockBuilder('fkooman\Rest\Plugin\Authentication\UserInfoInterface')->getMock();
+        $this->userInfo->method('getUserId')->willReturn('admin');
+
         $testTemplateManager = new TestTemplateManager();
         $testAuthorizationCode = new TestAuthorizationCode();
         $testAccessToken = new TestAccessToken();
 
-        $this->userInfo = $this->getMockBuilder('fkooman\Rest\Plugin\Authentication\UserInfoInterface')->getMock();
-        $this->userInfo->method('getUserId')->willReturn('admin');
+        $resourceServer = $this->getMockBuilder('fkooman\OAuth\ResourceServerInterface')->getMock();
+        $resourceServer->method('getResourceServer')->willReturn(
+            new ResourceServerInfo(
+                'r_id',
+                'post',
+                'SECRET'
+            )
+        );
 
         $io = $this->getMockBuilder('fkooman\OAuth\IO')->getMock();
         $io->method('getTime')->willReturn(1234567890);
@@ -51,6 +60,7 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
         $this->oauthServer = new OAuthServer(
             $testTemplateManager,
             new NoRegistrationClient(),
+            $resourceServer,
             $testAuthorizationCode,
             $testAccessToken,
             $io
