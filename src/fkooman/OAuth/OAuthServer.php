@@ -16,7 +16,7 @@ class OAuthServer
     /** @var ClientInterface */
     private $client;
 
-    /** @var ResourceServer */
+    /** @var ResourceServerInterface */
     private $resourceServer;
 
     /** @var AuthorizationCodeInterface */

@@ -10,8 +10,8 @@ interface ResourceServerInterface
      * @param string      $resourceServerId the resource server ID
      * @param string|null $scope            the scope
      *
-     * @return ResourceServer|false if the resource server exists with given
-     *                              parameters it returns ResourceServer, otherwise false
+     * @return ResourceServerInfo|false if the resource server exists with given
+     *                                  parameters it returns ResourceServer, otherwise false
      */
     public function getResourceServer($resourceServerId);
 }
