@@ -13,7 +13,7 @@ class NoRegistrationClient implements ClientInterface
         // scope are optional as they can be retrieve from the registration
         // data, because there is no registration we require them
         if (null === $clientId || null === $redirectUri || null === $scope) {
-            false;
+            return false;
         }
 
         return new ClientInfo($clientId, $redirectUri, $scope);

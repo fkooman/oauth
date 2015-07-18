@@ -9,6 +9,26 @@ class InputValidation
         return $clientId;
     }
 
+    public static function responseType($responseType)
+    {
+        // we only support 'code' for now
+        if ('code' !== $responseType) {
+            return false;
+        }
+
+        return $responseType;
+    }
+
+    public static function grantType($grantType)
+    {
+        // we only support 'authorization_code' for now
+        if ('authorization_code' !== $grantType) {
+            return false;
+        }
+
+        return $grantType;
+    }
+
     public static function redirectUri($redirectUri)
     {
         #   The redirection endpoint URI MUST be an absolute URI as defined by

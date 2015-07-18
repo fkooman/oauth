@@ -61,6 +61,7 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
     {
         $query = array(
             'client_id' => 'https://localhost',
+            'response_type' => 'code',
             'redirect_uri' => 'https://localhost/cb',
             'state' => '12345',
             'scope' => 'post',
@@ -73,7 +74,7 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
                     'client_id' => 'https://localhost',
                     'redirect_uri' => 'https://localhost/cb',
                     'scope' => 'post',
-                    'request_url' => 'https://oauth.example/authorize?client_id=https%3A%2F%2Flocalhost&redirect_uri=https%3A%2F%2Flocalhost%2Fcb&state=12345&scope=post',
+                    'request_url' => 'https://oauth.example/authorize?client_id=https%3A%2F%2Flocalhost&response_type=code&redirect_uri=https%3A%2F%2Flocalhost%2Fcb&state=12345&scope=post',
                 ),
             ),
             $this->oauthServer->getAuthorize($request, $this->userInfo)
@@ -85,6 +86,8 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
         $query = array(
             'redirect_uri' => 'https://localhost/cb',
             'state' => '12345',
+            'client_id' => 'https://localhost',
+            'response_type' => 'code',
             'scope' => 'post',
         );
         $request = $this->getAuthorizeRequest($query, 'POST', array('approval' => 'yes'));
@@ -117,6 +120,8 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
             array(
                 'code' => 'eyJ1c2VyX2lkIjoiYWRtaW4iLCJpYXQiOjEyMzQ1Njc4OTAsInJlZGlyZWN0X3VyaSI6Imh0dHBzOlwvXC9sb2NhbGhvc3RcL2NiIiwic2NvcGUiOiJwb3N0In0',
                 'redirect_uri' => 'https://localhost/cb',
+                'grant_type' => 'authorization_code',
+                'client_id' => 'https://localhost',
             )
         );
 
