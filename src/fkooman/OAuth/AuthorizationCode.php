@@ -5,6 +5,9 @@ namespace fkooman\OAuth;
 class AuthorizationCode
 {
     /** @var string */
+    private $clientId;
+
+    /** @var string */
     private $userId;
 
     /** @var int */
@@ -16,8 +19,9 @@ class AuthorizationCode
     /** @var string */
     private $scope;
 
-    public function __construct($userId, $issuedAt, $redirectUri, $scope)
+    public function __construct($clientId, $userId, $issuedAt, $redirectUri, $scope)
     {
+        $this->clientId = $clientId;
         $this->userId = $userId;
         $this->issuedAt = $issuedAt;
         $this->redirectUri = $redirectUri;
@@ -27,11 +31,17 @@ class AuthorizationCode
     public static function fromArray(array $authorizationCode)
     {
         return new self(
+            $authorizationCode['client_id'],
             $authorizationCode['user_id'],
             $authorizationCode['iat'],
             $authorizationCode['redirect_uri'],
             $authorizationCode['scope']
         );
+    }
+
+    public function getClientId()
+    {
+        return $this->clientId;
     }
 
     public function getUserId()

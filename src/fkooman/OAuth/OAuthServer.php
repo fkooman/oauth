@@ -70,6 +70,7 @@ class OAuthServer
         if ('yes' === $postAuthorizeRequest['approval']) {
             $code = $this->authorizationCode->store(
                 new AuthorizationCode(
+                    $postAuthorizeRequest['client_id'],
                     $userInfo->getUserId(),
                     $this->io->getTime(),
                     $postAuthorizeRequest['redirect_uri'],
@@ -100,13 +101,26 @@ class OAuthServer
         if ($this->io->getTime() > $iat + 600) {
             throw new BadRequestException('authorization code expired');
         }
-        // FIXME: values in code should match values from this request!
-        // FIXME: the scope could be less than authorized!
+
+        if ($authorizationCode->getClientId() !== $tokenRequest['client_id']) {
+            throw new BadRequestException('client_id does not match expected value');
+        }
+        if ($authorizationCode->getRedirectUri() !== $tokenRequest['redirect_uri']) {
+            throw new BadRequestException('redirect_uri does not match expected value');
+        }
+        if ($authorizationCode->getScope() !== $tokenRequest['scope']) {
+            throw new BadRequestException('scope does not match expected value');
+        }
+
+        // FIXME: grant_type must also match I think, but we do not have any
+        // mapping logic from response_type to grant_type yet...
+
         // FIXME: keep log of used codes (must not allowed to be replayed)
 
         // create an access token
         $accessToken = $this->accessToken->store(
             new AccessToken(
+                $authorizationCode->getClientId(),
                 $authorizationCode->getUserId(),
                 $this->io->getTime(),
                 $authorizationCode->getRedirectUri(),
@@ -139,6 +153,7 @@ class OAuthServer
         } else {
             $body = array(
                 'active' => true,
+                'client_id' => $accessToken->getClientId(),
                 'scope' => $accessToken->getScope(),
                 'token_type' => 'bearer',
                 'iat' => $accessToken->getIssuedAt(),

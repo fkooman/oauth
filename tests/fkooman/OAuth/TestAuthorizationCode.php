@@ -29,6 +29,7 @@ class TestAuthorizationCode implements AuthorizationCodeInterface
         return Base64Url::encode(
             Json::encode(
                 array(
+                    'client_id' => $authorizationCode->getClientId(),
                     'user_id' => $authorizationCode->getUserId(),
                     'iat' => $authorizationCode->getIssuedAt(),
                     'redirect_uri' => $authorizationCode->getRedirectUri(),

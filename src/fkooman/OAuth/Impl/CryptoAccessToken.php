@@ -23,6 +23,7 @@ class CryptoAccessToken implements AccessTokenInterface
     {
         // generate code
         $payload = array(
+            'client_id' => $accessToken->getClientId(),
             'iat' => $accessToken->getIssuedAt(),
             // FIXME: add nonce
 

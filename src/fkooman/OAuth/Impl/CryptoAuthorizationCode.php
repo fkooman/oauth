@@ -23,6 +23,7 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
     {
         // generate code
         $payload = array(
+            'client_id' => $authorizationCode->getClientId(),
             'iat' => $authorizationCode->getIssuedAt(),
             // FIXME: add nonce
             'user_id' => $authorizationCode->getUserId(),

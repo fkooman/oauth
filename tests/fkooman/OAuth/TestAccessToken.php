@@ -29,6 +29,7 @@ class TestAccessToken implements AccessTokenInterface
         return Base64Url::encode(
             Json::encode(
                 array(
+                    'client_id' => $accessToken->getClientId(),
                     'user_id' => $accessToken->getUserId(),
                     'iat' => $accessToken->getIssuedAt(),
                     'redirect_uri' => $accessToken->getRedirectUri(),

@@ -84,9 +84,9 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
     public function testPostAuthorize()
     {
         $query = array(
+            'client_id' => 'https://localhost',
             'redirect_uri' => 'https://localhost/cb',
             'state' => '12345',
-            'client_id' => 'https://localhost',
             'response_type' => 'code',
             'scope' => 'post',
         );
@@ -96,7 +96,7 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
             array(
                 'HTTP/1.1 302 Found',
                 'Content-Type: text/html;charset=UTF-8',
-                'Location: https://localhost/cb?code=eyJ1c2VyX2lkIjoiYWRtaW4iLCJpYXQiOjEyMzQ1Njc4OTAsInJlZGlyZWN0X3VyaSI6Imh0dHBzOlwvXC9sb2NhbGhvc3RcL2NiIiwic2NvcGUiOiJwb3N0In0&state=12345',
+                'Location: https://localhost/cb?code=eyJjbGllbnRfaWQiOiJodHRwczpcL1wvbG9jYWxob3N0IiwidXNlcl9pZCI6ImFkbWluIiwiaWF0IjoxMjM0NTY3ODkwLCJyZWRpcmVjdF91cmkiOiJodHRwczpcL1wvbG9jYWxob3N0XC9jYiIsInNjb3BlIjoicG9zdCJ9&state=12345',
                 '',
                 '',
             ),
@@ -118,7 +118,8 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
                 'REQUEST_METHOD' => 'POST',
             ),
             array(
-                'code' => 'eyJ1c2VyX2lkIjoiYWRtaW4iLCJpYXQiOjEyMzQ1Njc4OTAsInJlZGlyZWN0X3VyaSI6Imh0dHBzOlwvXC9sb2NhbGhvc3RcL2NiIiwic2NvcGUiOiJwb3N0In0',
+                'code' => 'eyJjbGllbnRfaWQiOiJodHRwczpcL1wvbG9jYWxob3N0IiwidXNlcl9pZCI6ImFkbWluIiwiaWF0IjoxMjM0NTY3ODkwLCJyZWRpcmVjdF91cmkiOiJodHRwczpcL1wvbG9jYWxob3N0XC9jYiIsInNjb3BlIjoicG9zdCJ9',
+                'scope' => 'post',
                 'redirect_uri' => 'https://localhost/cb',
                 'grant_type' => 'authorization_code',
                 'client_id' => 'https://localhost',
@@ -132,7 +133,7 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
                 'Cache-Control: no-store',
                 'Pragma: no-cache',
                 '',
-                '{"access_token":"eyJ1c2VyX2lkIjoiYWRtaW4iLCJpYXQiOjEyMzQ1Njc4OTAsInJlZGlyZWN0X3VyaSI6Imh0dHBzOlwvXC9sb2NhbGhvc3RcL2NiIiwic2NvcGUiOiJwb3N0In0","scope":"post"}',
+                '{"access_token":"eyJjbGllbnRfaWQiOiJodHRwczpcL1wvbG9jYWxob3N0IiwidXNlcl9pZCI6ImFkbWluIiwiaWF0IjoxMjM0NTY3ODkwLCJyZWRpcmVjdF91cmkiOiJodHRwczpcL1wvbG9jYWxob3N0XC9jYiIsInNjb3BlIjoicG9zdCJ9","scope":"post"}',
             ),
             $this->oauthServer->postToken($request)->toArray()
         );
@@ -152,7 +153,7 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
                 'REQUEST_METHOD' => 'POST',
             ),
             array(
-                'token' => 'eyJ1c2VyX2lkIjoiYWRtaW4iLCJpYXQiOjEyMzQ1Njc4OTAsInJlZGlyZWN0X3VyaSI6Imh0dHBzOlwvXC9sb2NhbGhvc3RcL2NiIiwic2NvcGUiOiJwb3N0In0',
+                'token' => 'eyJjbGllbnRfaWQiOiJodHRwczpcL1wvbG9jYWxob3N0IiwidXNlcl9pZCI6ImFkbWluIiwiaWF0IjoxMjM0NTY3ODkwLCJyZWRpcmVjdF91cmkiOiJodHRwczpcL1wvbG9jYWxob3N0XC9jYiIsInNjb3BlIjoicG9zdCJ9',
             )
         );
 
@@ -161,7 +162,7 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
                 'HTTP/1.1 200 OK',
                 'Content-Type: application/json',
                 '',
-                '{"active":true,"scope":"post","token_type":"bearer","iat":1234567890,"sub":"admin"}',
+                '{"active":true,"client_id":"https:\/\/localhost","scope":"post","token_type":"bearer","iat":1234567890,"sub":"admin"}',
             ),
             $this->oauthServer->postIntrospect($request, $this->userInfo)->toArray()
         );
