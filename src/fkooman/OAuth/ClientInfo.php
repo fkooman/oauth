@@ -8,14 +8,18 @@ class ClientInfo
     private $clientId;
 
     /** @var string */
+    private $responseType;
+
+    /** @var string */
     private $redirectUri;
 
     /** @var string */
     private $scope;
 
-    public function __construct($clientId, $redirectUri, $scope)
+    public function __construct($clientId, $responseType, $redirectUri, $scope)
     {
         $this->clientId = $clientId;
+        $this->responseType = $responseType;
         $this->redirectUri = $redirectUri;
         $this->scope = $scope;
     }
@@ -24,6 +28,7 @@ class ClientInfo
     {
         return new self(
             $client['client_id'],
+            $client['response_type'],
             $client['redirect_uri'],
             $client['scope']
         );
@@ -32,6 +37,11 @@ class ClientInfo
     public function getClientId()
     {
         return $this->clientId;
+    }
+
+    public function getResponseType()
+    {
+        return $this->responseType;
     }
 
     public function getRedirectUri()

@@ -47,6 +47,7 @@ class OAuthServer
 
         $clientInfo = $this->client->getClient(
             $authorizeRequest['client_id'],
+            $authorizeRequest['response_type'],
             $authorizeRequest['redirect_uri'],
             $authorizeRequest['scope']
         );
