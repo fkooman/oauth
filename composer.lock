@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d3349b89aa95612591a710adbc43db66",
+    "hash": "ad47cfe19bfdb8354abac162358f6808",
     "packages": [
         {
             "name": "fkooman/base64",
@@ -160,6 +160,49 @@
             ],
             "description": "PHP library to encode and decode JSON",
             "time": "2015-07-13 11:58:01"
+        },
+        {
+            "name": "fkooman/oauth",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fkooman/php-lib-oauth.git",
+                "reference": "558d4f27e4d3cab8372d6a13d1d892bbe3629c99"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fkooman/php-lib-oauth/zipball/558d4f27e4d3cab8372d6a13d1d892bbe3629c99",
+                "reference": "558d4f27e4d3cab8372d6a13d1d892bbe3629c99",
+                "shasum": ""
+            },
+            "require": {
+                "ext-date": "*",
+                "ext-filter": "*",
+                "ext-pcre": "*",
+                "fkooman/rest": "^1.0.0",
+                "fkooman/rest-plugin-authentication": "^1.0.0"
+            },
+            "require-dev": {
+                "fkooman/base64": "^1.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "fkooman\\OAuth\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "François Kooman",
+                    "email": "fkooman@tuxed.net"
+                }
+            ],
+            "description": "Simple OAuth 2.0 Server",
+            "time": "2015-07-21 11:19:10"
         },
         {
             "name": "fkooman/rest",
@@ -397,7 +440,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "fkooman/crypto": 20
+        "fkooman/crypto": 20,
+        "fkooman/oauth": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

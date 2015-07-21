@@ -7,12 +7,12 @@
     ],
     "autoload": {
         "psr-0": {
-            "fkooman\\OAuth\\": "src/"
+            "fkooman\\OAuth\\Impl\\": "src/"
         }
     },
     "description": "Simple OAuth 2.0 Server",
     "license": "AGPL3.0",
-    "name": "fkooman/oauth",
+    "name": "fkooman/oauth-server",
     "require": {
         "ext-date": "*",
         "ext-filter": "*",
@@ -21,6 +21,7 @@
         "fkooman/ini": "^1.0.0",
         "fkooman/json": "^1.0",
         "fkooman/rest": "^1.0.0",
+	"fkooman/oauth": "dev-master",
         "fkooman/rest-plugin-authentication-basic": "^1.0.0",
         "twig/twig": "^1.18"
     }
