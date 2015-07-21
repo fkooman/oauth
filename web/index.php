@@ -3,6 +3,7 @@
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
 use fkooman\Rest\Plugin\Authentication\AuthenticationPlugin;
+use fkooman\Rest\Plugin\Authentication\IndieAuth\IndieAuthAuthentication;
 use fkooman\Rest\Plugin\Authentication\Basic\BasicAuthentication;
 use fkooman\OAuth\OAuthServer;
 use fkooman\OAuth\Impl\TwigTemplateManager;
@@ -21,16 +22,8 @@ $iniReader = IniReader::fromFile(
 );
 
 // USER AUTH
-$userAuthentication = new BasicAuthentication(
-    function ($userId) {
-        $c = Json::decodeFile(dirname(__DIR__).'/config/users.json');
-
-        return $c[$userId]['secret'];
-    },
-    array(
-        'realm' => 'OAuth',
-    )
-);
+$userAuthentication = new IndieAuthAuthentication();
+$userAuthentication->setUnauthorizedRedirectUri('/id');
 
 // RESOURCE SERVER AUTH
 $resourceServerAuthentication = new BasicAuthentication(
