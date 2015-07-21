@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e148378aaf0c864640e844a27b546f6d",
+    "hash": "d3349b89aa95612591a710adbc43db66",
     "packages": [
         {
             "name": "fkooman/base64",
@@ -163,16 +163,16 @@
         },
         {
             "name": "fkooman/rest",
-            "version": "0.9.1",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-lib-rest.git",
-                "reference": "ede6f39c51f7445ea9b22138853e2e98b1babe82"
+                "reference": "55564781fe97fd3121fccdd7d1250f8b1f267f2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-rest/zipball/ede6f39c51f7445ea9b22138853e2e98b1babe82",
-                "reference": "ede6f39c51f7445ea9b22138853e2e98b1babe82",
+                "url": "https://api.github.com/repos/fkooman/php-lib-rest/zipball/55564781fe97fd3121fccdd7d1250f8b1f267f2b",
+                "reference": "55564781fe97fd3121fccdd7d1250f8b1f267f2b",
                 "shasum": ""
             },
             "require": {
@@ -184,11 +184,7 @@
                 "php": ">=5.3.3"
             },
             "suggest": {
-                "fkooman/rest-plugin-basic": "Basic Authentication plugin",
-                "fkooman/rest-plugin-bearer": "Bearer (OAuth) Authentication plugin",
-                "fkooman/rest-plugin-indieauth": "IndieAuth Authentication plugin",
-                "fkooman/rest-plugin-mellon": "Mellon (SAML) Authentication plugin",
-                "fkooman/rest-plugin-tls": "TLS Client Certificate Authentication plugin"
+                "fkooman/rest-plugin-authentication": "Authentication plugin"
             },
             "type": "library",
             "autoload": {
@@ -209,31 +205,78 @@
                 }
             ],
             "description": "Simple PHP library for writing REST services.",
-            "time": "2015-07-13 12:18:54"
+            "time": "2015-07-20 21:02:38"
         },
         {
-            "name": "fkooman/rest-plugin-basic",
-            "version": "0.6.1",
+            "name": "fkooman/rest-plugin-authentication",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fkooman/php-lib-rest-plugin-basic.git",
-                "reference": "886a0058299db6a75932b5706a522d5cdc585bcb"
+                "url": "https://github.com/fkooman/php-lib-rest-plugin-authentication.git",
+                "reference": "6a711f23add7c9cc35d04e223305633a5d7d38e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-rest-plugin-basic/zipball/886a0058299db6a75932b5706a522d5cdc585bcb",
-                "reference": "886a0058299db6a75932b5706a522d5cdc585bcb",
+                "url": "https://api.github.com/repos/fkooman/php-lib-rest-plugin-authentication/zipball/6a711f23add7c9cc35d04e223305633a5d7d38e2",
+                "reference": "6a711f23add7c9cc35d04e223305633a5d7d38e2",
                 "shasum": ""
             },
             "require": {
-                "fkooman/rest": "~0.9.0",
-                "ircmaxell/password-compat": "~1.0",
-                "php": ">=5.3.3"
+                "ext-spl": "*",
+                "fkooman/rest": "^1.0.0",
+                "php": ">=5.4"
+            },
+            "suggest": {
+                "fkooman/rest-plugin-authentication-basic": "Basic Authentication plugin",
+                "fkooman/rest-plugin-authentication-bearer": "Bearer (OAuth) Authentication plugin",
+                "fkooman/rest-plugin-authentication-indieauth": "IndieAuth Authentication plugin",
+                "fkooman/rest-plugin-authentication-mellon": "Mellon (SAML) Authentication plugin",
+                "fkooman/rest-plugin-authentication-tls": "TLS Client Certificate Authentication plugin"
             },
             "type": "library",
             "autoload": {
                 "psr-0": {
-                    "fkooman\\Rest\\Plugin\\Basic\\": "src/"
+                    "fkooman\\Rest\\Plugin\\Authentication\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "François Kooman",
+                    "email": "fkooman@tuxed.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Authentication plugin for fkooman/rest",
+            "time": "2015-07-20 13:04:00"
+        },
+        {
+            "name": "fkooman/rest-plugin-authentication-basic",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fkooman/php-lib-rest-plugin-authentication-basic.git",
+                "reference": "bb3b616444769d3b47818e11ca1537f81f575f2b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fkooman/php-lib-rest-plugin-authentication-basic/zipball/bb3b616444769d3b47818e11ca1537f81f575f2b",
+                "reference": "bb3b616444769d3b47818e11ca1537f81f575f2b",
+                "shasum": ""
+            },
+            "require": {
+                "fkooman/rest": "^1.0.0",
+                "fkooman/rest-plugin-authentication": "^1.0.0",
+                "ircmaxell/password-compat": "~1.0",
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "fkooman\\Rest\\Plugin\\Authentication\\Basic\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -248,7 +291,7 @@
                 }
             ],
             "description": "Basic Authentication plugin for fkooman/rest",
-            "time": "2015-06-29 18:55:35"
+            "time": "2015-07-20 13:36:53"
         },
         {
             "name": "ircmaxell/password-compat",

@@ -3,11 +3,9 @@
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
 use fkooman\Rest\Service;
-use fkooman\Rest\PluginRegistry;
-use fkooman\Rest\ExceptionHandler;
-use fkooman\OAuth\AuthenticationPlugin;
+use fkooman\Rest\Plugin\Authentication\AuthenticationPlugin;
 use fkooman\Rest\Plugin\Authentication\UserInfoInterface;
-use fkooman\Rest\Plugin\Basic\BasicAuthentication;
+use fkooman\Rest\Plugin\Authentication\Basic\BasicAuthentication;
 use fkooman\Http\Request;
 use fkooman\OAuth\OAuthServer;
 use fkooman\OAuth\Impl\TwigTemplateManager;
@@ -18,8 +16,6 @@ use fkooman\Json\Json;
 use fkooman\Ini\IniReader;
 use fkooman\OAuth\Impl\NoRegistrationClient;
 use fkooman\OAuth\Impl\JsonResourceServer;
-
-ExceptionHandler::register();
 
 $iniReader = IniReader::fromFile(
     dirname(__DIR__).'/config/server.ini'
@@ -41,6 +37,8 @@ $userAuthentication = new BasicAuthentication(
     )
 );
 
+#$userAuthentication = new IndieAuthAuthentication();
+
 // for resource server authentication
 $resourceServerAuthentication = new BasicAuthentication(
     function ($resourceServerId) use ($jsonResourceServer) {
@@ -57,13 +55,13 @@ $resourceServerAuthentication = new BasicAuthentication(
 );
 
 $authenticationPlugin = new AuthenticationPlugin();
-$authenticationPlugin->registerAuthenticationPlugin($userAuthentication, 'user');
-$authenticationPlugin->registerAuthenticationPlugin($resourceServerAuthentication, 'resource_server');
+$authenticationPlugin->register($userAuthentication, 'user');
+$authenticationPlugin->register($resourceServerAuthentication, 'resource_server');
 
-$pluginRegistry = new PluginRegistry();
-$pluginRegistry->registerDefaultPlugin($authenticationPlugin);
+//$pluginRegistry = new PluginRegistry();
+//$pluginRegistry->registerDefaultPlugin($authenticationPlugin);
 
-$service->setPluginRegistry($pluginRegistry);
+$service->getPluginRegistry()->registerDefaultPlugin($authenticationPlugin);
 
 $key = Key::load($iniReader->v('Security', 'Key'));
 
@@ -81,7 +79,7 @@ $service->get(
         return $o->getAuthorize($request, $userInfo);
     },
     array(
-        'fkooman\OAuth\AuthenticationPlugin' => array(
+        'fkooman\Rest\Plugin\Authentication\AuthenticationPlugin' => array(
             'only' => 'user',
         ),
     )
@@ -93,7 +91,7 @@ $service->post(
         return $o->postAuthorize($request, $userInfo);
     },
     array(
-        'fkooman\OAuth\AuthenticationPlugin' => array(
+        'fkooman\Rest\Plugin\Authentication\AuthenticationPlugin' => array(
             'only' => 'user',
         ),
     )
@@ -106,7 +104,7 @@ $service->post(
         return $o->postToken($request);
     },
     array(
-        'fkooman\OAuth\AuthenticationPlugin' => array(
+        'fkooman\Rest\Plugin\Authentication\AuthenticationPlugin' => array(
             //'only' => 'client',
             'enabled' => false,
         ),
@@ -119,7 +117,7 @@ $service->post(
         return $o->postIntrospect($request, $userInfo);
     },
     array(
-        'fkooman\OAuth\AuthenticationPlugin' => array(
+        'fkooman\Rest\Plugin\Authentication\AuthenticationPlugin' => array(
             'only' => 'resource_server',
         ),
     )

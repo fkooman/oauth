@@ -81,6 +81,7 @@ class OAuthServerTest extends PHPUnit_Framework_TestCase
         $this->assertSame(
             array(
                 'getAuthorize' => array(
+                    'user_id' => 'admin',
                     'client_id' => 'https://localhost',
                     'redirect_uri' => 'https://localhost/cb',
                     'scope' => 'post',

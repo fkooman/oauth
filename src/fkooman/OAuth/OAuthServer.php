@@ -59,6 +59,7 @@ class OAuthServer
         return $this->templateManager->render(
             'getAuthorize',
             array(
+                'user_id' => $userInfo->getUserId(),
                 'client_id' => $clientInfo->getClientId(),
                 'redirect_uri' => $clientInfo->getRedirectUri(),
                 'scope' => $clientInfo->getScope(),
@@ -151,22 +152,27 @@ class OAuthServer
         $introspectRequest = RequestValidation::validateIntrospectRequest($request);
         $accessToken = $this->accessToken->retrieve($introspectRequest['token']);
 
-        // FIXME: also check if the RS authenticating is the audientce, or at
-        // least if it supports the scopes granted by the user...
-
         if (false === $accessToken) {
             $body = array(
                 'active' => false,
             );
         } else {
-            $body = array(
-                'active' => true,
-                'client_id' => $accessToken->getClientId(),
-                'scope' => $accessToken->getScope(),
-                'token_type' => 'bearer',
-                'iat' => $accessToken->getIssuedAt(),
-                'sub' => $accessToken->getUserId(),
-            );
+            // FIXME: use better scope matching...
+            $resourceServerInfo = $this->resourceServer->getResourceServer($userInfo->getUserId());
+            if($resourceServerInfo->getScope() !== $accessToken->getScope()) {
+                $body = array(
+                    'active' => false,
+                );
+            } else {
+                $body = array(
+                    'active' => true,
+                    'client_id' => $accessToken->getClientId(),
+                    'scope' => $accessToken->getScope(),
+                    'token_type' => 'bearer',
+                    'iat' => $accessToken->getIssuedAt(),
+                    'sub' => $accessToken->getUserId(),
+                );
+            }
         }
 
         $response = new JsonResponse();
