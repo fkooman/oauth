@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e33e7ec89784e84f6de558885faa9585",
+    "hash": "1585c24e7ccc1aaf9fd2f4fc3f956103",
     "packages": [
         {
             "name": "fkooman/base64",
@@ -45,16 +45,16 @@
         },
         {
             "name": "fkooman/crypto",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-lib-crypto.git",
-                "reference": "979e9c9f1caf0c580ae2de24d15483a8328fa0c5"
+                "reference": "33f03c92107be67cebe4ed10fbfaca89583ff681"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-crypto/zipball/979e9c9f1caf0c580ae2de24d15483a8328fa0c5",
-                "reference": "979e9c9f1caf0c580ae2de24d15483a8328fa0c5",
+                "url": "https://api.github.com/repos/fkooman/php-lib-crypto/zipball/33f03c92107be67cebe4ed10fbfaca89583ff681",
+                "reference": "33f03c92107be67cebe4ed10fbfaca89583ff681",
                 "shasum": ""
             },
             "require": {
@@ -82,7 +82,7 @@
                 }
             ],
             "description": "A simple encryption and decryption library",
-            "time": "2015-07-15 11:06:16"
+            "time": "2015-07-22 11:29:16"
         },
         {
             "name": "fkooman/ini",
@@ -378,26 +378,26 @@
         },
         {
             "name": "fkooman/rest-plugin-authentication-indieauth",
-            "version": "1.0.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-lib-rest-plugin-authentication-indieauth.git",
-                "reference": "b9cc1da8bcd6fdc1387f1a16949b8f198d5ade6e"
+                "reference": "6a93d3ced16e64e9836471a09328aa19e75f99b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-rest-plugin-authentication-indieauth/zipball/b9cc1da8bcd6fdc1387f1a16949b8f198d5ade6e",
-                "reference": "b9cc1da8bcd6fdc1387f1a16949b8f198d5ade6e",
+                "url": "https://api.github.com/repos/fkooman/php-lib-rest-plugin-authentication-indieauth/zipball/6a93d3ced16e64e9836471a09328aa19e75f99b3",
+                "reference": "6a93d3ced16e64e9836471a09328aa19e75f99b3",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-filter": "*",
                 "ext-libxml": "*",
-                "ext-openssl": "*",
                 "ext-pcre": "*",
                 "ext-spl": "*",
-                "fkooman/rest": "^1.0.0",
+                "fkooman/io": "^1.0.0",
+                "fkooman/rest": "^1.0.1",
                 "fkooman/rest-plugin-authentication": "^1.0.0",
                 "guzzlehttp/guzzle": "~5.3",
                 "php": ">=5.4"
@@ -420,7 +420,7 @@
                 }
             ],
             "description": "IndieAuth plugin for fkooman/rest",
-            "time": "2015-07-20 15:51:31"
+            "time": "2015-07-21 16:02:09"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -729,8 +729,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "fkooman/crypto": 20,
-        "fkooman/oauth": 20
+        "fkooman/oauth": 20,
+        "fkooman/rest-plugin-authentication-indieauth": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

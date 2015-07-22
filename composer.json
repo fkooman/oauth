@@ -17,13 +17,13 @@
         "ext-date": "*",
         "ext-filter": "*",
         "ext-spl": "*",
-        "fkooman/crypto": "dev-master",
+        "fkooman/crypto": "^1.0.0",
         "fkooman/ini": "^1.0.0",
         "fkooman/json": "^1.0",
         "fkooman/oauth": "dev-master",
         "fkooman/rest": "^1.0.0",
         "fkooman/rest-plugin-authentication-basic": "^1.0.0",
-        "fkooman/rest-plugin-authentication-indieauth": "^1.0.0",
+        "fkooman/rest-plugin-authentication-indieauth": "dev-master",
         "twig/twig": "^1.18"
     }
 }

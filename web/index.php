@@ -22,8 +22,18 @@ $iniReader = IniReader::fromFile(
 );
 
 // USER AUTH
-$userAuthentication = new IndieAuthAuthentication();
-$userAuthentication->setUnauthorizedRedirectUri('/id');
+#$userAuthentication = new IndieAuthAuthentication();
+#$userAuthentication->setUnauthorizedRedirectUri('/_indieauth/identify');
+
+$userAuthentication = new BasicAuthentication(
+    function ($userId) {
+        $c = Json::decodeFile(dirname(__DIR__).'/config/users.json');
+        return $c[$userId]['secret'];
+    },
+    array(
+        'realm' => 'OAuth',
+    )
+);
 
 // RESOURCE SERVER AUTH
 $resourceServerAuthentication = new BasicAuthentication(
