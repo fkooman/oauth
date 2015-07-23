@@ -10,7 +10,7 @@
     <div id="container">
         <form method="post" action="_indieauth/auth">
             <input type="text" name="me" placeholder="yourdomain.com" required>
-            <input type="hidden" name="redirect_to" value="{{ redirectTo }}">
+            <input type="hidden" name="redirect_to" value="{{ redirectTo|e }}">
             <input type="submit" value="Sign In">
         </form>
     </div> <!-- /container -->
