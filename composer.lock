@@ -206,12 +206,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-lib-oauth.git",
-                "reference": "7d0916b796febac2efe4ef5e59dc75710e00d963"
+                "reference": "4c78be51dafebd0069b51187a28901b23fbf9747"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-oauth/zipball/7d0916b796febac2efe4ef5e59dc75710e00d963",
-                "reference": "7d0916b796febac2efe4ef5e59dc75710e00d963",
+                "url": "https://api.github.com/repos/fkooman/php-lib-oauth/zipball/4c78be51dafebd0069b51187a28901b23fbf9747",
+                "reference": "4c78be51dafebd0069b51187a28901b23fbf9747",
                 "shasum": ""
             },
             "require": {
@@ -242,7 +242,7 @@
                 }
             ],
             "description": "OAuth 2.0 Server Library",
-            "time": "2015-07-21 15:51:42"
+            "time": "2015-07-23 10:20:22"
         },
         {
             "name": "fkooman/rest",
@@ -382,12 +382,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-lib-rest-plugin-authentication-indieauth.git",
-                "reference": "6a93d3ced16e64e9836471a09328aa19e75f99b3"
+                "reference": "e536a9b40ef3ca856460bc99725534428ff8c2f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-rest-plugin-authentication-indieauth/zipball/6a93d3ced16e64e9836471a09328aa19e75f99b3",
-                "reference": "6a93d3ced16e64e9836471a09328aa19e75f99b3",
+                "url": "https://api.github.com/repos/fkooman/php-lib-rest-plugin-authentication-indieauth/zipball/e536a9b40ef3ca856460bc99725534428ff8c2f1",
+                "reference": "e536a9b40ef3ca856460bc99725534428ff8c2f1",
                 "shasum": ""
             },
             "require": {
@@ -420,7 +420,7 @@
                 }
             ],
             "description": "IndieAuth plugin for fkooman/rest",
-            "time": "2015-07-21 16:02:09"
+            "time": "2015-07-23 09:49:40"
         },
         {
             "name": "guzzlehttp/guzzle",

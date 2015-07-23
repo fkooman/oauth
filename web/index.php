@@ -14,7 +14,7 @@ use fkooman\Json\Json;
 use fkooman\Ini\IniReader;
 use fkooman\OAuth\Impl\NoRegistrationClient;
 use fkooman\OAuth\Impl\JsonResourceServer;
-use fkooman\OAuth\OAuthService;
+use fkooman\OAuth\Impl\MyOAuthService;
 
 // CONFIG
 $iniReader = IniReader::fromFile(
@@ -22,18 +22,18 @@ $iniReader = IniReader::fromFile(
 );
 
 // USER AUTH
-#$userAuthentication = new IndieAuthAuthentication();
-#$userAuthentication->setUnauthorizedRedirectUri('/_indieauth/identify');
+$userAuthentication = new IndieAuthAuthentication();
+$userAuthentication->setUnauthorizedRedirectUri('/identify');
 
-$userAuthentication = new BasicAuthentication(
-    function ($userId) {
-        $c = Json::decodeFile(dirname(__DIR__).'/config/users.json');
-        return $c[$userId]['secret'];
-    },
-    array(
-        'realm' => 'OAuth',
-    )
-);
+#$userAuthentication = new BasicAuthentication(
+#    function ($userId) {
+#        $c = Json::decodeFile(dirname(__DIR__).'/config/users.json');
+#        return $c[$userId]['secret'];
+#    },
+#    array(
+#        'realm' => 'OAuth',
+#    )
+#);
 
 // RESOURCE SERVER AUTH
 $resourceServerAuthentication = new BasicAuthentication(
@@ -60,7 +60,7 @@ $o = new OAuthServer(
     new CryptoAccessToken($key)
 );
 
-$service = new OAuthService($o);
+$service = new MyOAuthService($o);
 
 // AUTHENTICATION PLUGIN
 $authenticationPlugin = new AuthenticationPlugin();
