@@ -19,6 +19,7 @@
         "ext-spl": "*",
         "fkooman/crypto": "^1.0.0",
         "fkooman/ini": "^1.0.0",
+        "fkooman/io": "^1.0.0",
         "fkooman/json": "^1.0",
         "fkooman/oauth": "dev-master",
         "fkooman/rest": "^1.0.0",

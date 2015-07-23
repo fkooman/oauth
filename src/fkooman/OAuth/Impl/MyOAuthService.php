@@ -25,6 +25,7 @@ class MyOAuthService extends OAuthService
                     'getIdentify',
                     array(
                         'redirectTo' => urldecode($request->getUrl()->getQueryParameter('redirect_to')),
+                        'me' => $request->getUrl()->getQueryParameter('me'),
                     )
                 );
             },

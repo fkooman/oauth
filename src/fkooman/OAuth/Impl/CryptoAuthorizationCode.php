@@ -7,6 +7,7 @@ use fkooman\Crypto\Key;
 use fkooman\OAuth\AuthorizationCodeInterface;
 use fkooman\Json\Json;
 use fkooman\OAuth\AuthorizationCode;
+use fkooman\IO\IO;
 use Exception;
 
 class CryptoAuthorizationCode implements AuthorizationCodeInterface
@@ -14,9 +15,15 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
     /** @var \fkooman\Crypto\Symmetric */
     private $symmetric;
 
-    public function __construct(Key $key)
+    /** @var \fkooman\IO\IO */
+    private $io;
+    public function __construct(Key $key, IO $io = null)
     {
         $this->symmetric = new Symmetric($key);
+        if(null === $io) {
+            $io = new IO();
+        }
+        $this->io = $io;
     }
 
     public function store(AuthorizationCode $authorizationCode)
@@ -25,11 +32,8 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
         $payload = array(
             'client_id' => $authorizationCode->getClientId(),
             'iat' => $authorizationCode->getIssuedAt(),
-            // FIXME: add nonce
             'user_id' => $authorizationCode->getUserId(),
-# https://tools.ietf.org/html/rfc7519#section-4.1.7
-
-            'jti' => 'some_nonce_that_must_be_recorded_against_replay',
+            'jti' => $this->io->getRandom(), // https://tools.ietf.org/html/rfc7519#section-4.1.7
             'redirect_uri' => $authorizationCode->getRedirectUri(),
             'scope' => $authorizationCode->getScope(),
         );
@@ -39,8 +43,6 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
 
     public function retrieve($authorizationCode)
     {
-        // FIXME: protection against replaying must be implemented somewhere,
-        // maybe here??
         try {
             return AuthorizationCode::fromArray(
                 Json::decode($this->symmetric->decrypt($authorizationCode), true)
@@ -49,5 +51,12 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
             // if anything goes wrong, just return false
             return false;
         }
+    }
+
+    public function isFresh($authorizationCode)
+    {
+        // FIXME: implement log of used authorization codes, keep track of 
+        // nonces I guess...
+        return true;
     }
 }

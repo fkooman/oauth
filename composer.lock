@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1585c24e7ccc1aaf9fd2f4fc3f956103",
+    "hash": "2d8646a02a062ad9f5ddad8f3211c6fd",
     "packages": [
         {
             "name": "fkooman/base64",
@@ -206,21 +206,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-lib-oauth.git",
-                "reference": "4c78be51dafebd0069b51187a28901b23fbf9747"
+                "reference": "9660f58e1ee97eb826b70471e3a65059c4c79165"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-oauth/zipball/4c78be51dafebd0069b51187a28901b23fbf9747",
-                "reference": "4c78be51dafebd0069b51187a28901b23fbf9747",
+                "url": "https://api.github.com/repos/fkooman/php-lib-oauth/zipball/9660f58e1ee97eb826b70471e3a65059c4c79165",
+                "reference": "9660f58e1ee97eb826b70471e3a65059c4c79165",
                 "shasum": ""
             },
             "require": {
-                "ext-date": "*",
                 "ext-filter": "*",
                 "ext-pcre": "*",
                 "fkooman/io": "^1.0.0",
                 "fkooman/rest": "^1.0.0",
-                "fkooman/rest-plugin-authentication": "^1.0.0"
+                "fkooman/rest-plugin-authentication": "^1.0.0",
+                "php": ">= 5.3.3"
             },
             "require-dev": {
                 "fkooman/base64": "^1.0.0"
@@ -233,7 +233,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "AGPL-3.0"
+                "Apache-2.0"
             ],
             "authors": [
                 {
@@ -242,7 +242,7 @@
                 }
             ],
             "description": "OAuth 2.0 Server Library",
-            "time": "2015-07-23 10:20:22"
+            "time": "2015-07-23 17:00:21"
         },
         {
             "name": "fkooman/rest",
