@@ -19,7 +19,7 @@ class CryptoAccessToken implements AccessTokenInterface
         $this->symmetric = new Symmetric($key);
     }
 
-    public function store(AccessToken $accessToken)
+    public function storeAccessToken(AccessToken $accessToken)
     {
         // generate code
         $payload = array(
@@ -37,7 +37,7 @@ class CryptoAccessToken implements AccessTokenInterface
         return $this->symmetric->encrypt(Json::encode($payload));
     }
 
-    public function retrieve($accessToken)
+    public function retrieveAccessToken($accessToken)
     {
         // FIXME: catch situation where signature not matches and return false instead
         try {

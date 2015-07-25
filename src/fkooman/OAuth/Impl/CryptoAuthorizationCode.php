@@ -20,13 +20,13 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
     public function __construct(Key $key, IO $io = null)
     {
         $this->symmetric = new Symmetric($key);
-        if(null === $io) {
+        if (null === $io) {
             $io = new IO();
         }
         $this->io = $io;
     }
 
-    public function store(AuthorizationCode $authorizationCode)
+    public function storeAuthorizationCode(AuthorizationCode $authorizationCode)
     {
         // generate code
         $payload = array(
@@ -41,7 +41,7 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
         return $this->symmetric->encrypt(Json::encode($payload));
     }
 
-    public function retrieve($authorizationCode)
+    public function retrieveAuthorizationCode($authorizationCode)
     {
         try {
             return AuthorizationCode::fromArray(
@@ -53,7 +53,7 @@ class CryptoAuthorizationCode implements AuthorizationCodeInterface
         }
     }
 
-    public function isFresh($authorizationCode)
+    public function isFreshAuthorizationCode($authorizationCode)
     {
         // FIXME: implement log of used authorization codes, keep track of 
         // nonces I guess...
