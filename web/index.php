@@ -8,7 +8,6 @@ use fkooman\Rest\Plugin\Authentication\Basic\BasicAuthentication;
 use fkooman\OAuth\OAuthServer;
 use fkooman\OAuth\Impl\TwigTemplateManager;
 use fkooman\OAuth\Impl\CryptoAuthorizationCode;
-use fkooman\OAuth\Impl\CryptoAccessToken;
 use fkooman\Crypto\Key;
 use fkooman\Json\Json;
 use fkooman\Ini\IniReader;
@@ -52,12 +51,14 @@ $resourceServerAuthentication = new BasicAuthentication(
 );
 
 $key = Key::load($iniReader->v('Security', 'Key'));
+$crypto = new CryptoAuthorizationCode($key);
+
 $o = new OAuthServer(
     new TwigTemplateManager(),
     new NoRegistrationClient(),
     new JsonResourceServer(dirname(__DIR__).'/config/resource_servers.json'),
-    new CryptoAuthorizationCode($key),
-    new CryptoAccessToken($key)
+    $crypto,
+    $crypto
 );
 
 $service = new MyOAuthService($o);
