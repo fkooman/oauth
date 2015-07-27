@@ -5,7 +5,7 @@ require_once dirname(__DIR__).'/vendor/autoload.php';
 use fkooman\Rest\Plugin\Authentication\IndieAuth\IndieAuthAuthentication;
 use fkooman\OAuth\OAuthServer;
 use fkooman\OAuth\Impl\TwigTemplateManager;
-use fkooman\OAuth\Impl\CryptoAuthorizationCode;
+use fkooman\OAuth\Impl\CryptoStorage;
 use fkooman\Crypto\Key;
 use fkooman\Json\Json;
 use fkooman\Ini\IniReader;
@@ -23,14 +23,14 @@ $userAuthentication = new IndieAuthAuthentication();
 $userAuthentication->setUnauthorizedRedirectUri('/identify');
 
 $key = Key::load($iniReader->v('Security', 'Key'));
-$crypto = new CryptoAuthorizationCode($key);
+$cryptoStorage = new CryptoStorage($key);
 
 $o = new OAuthServer(
     new TwigTemplateManager(),
     new NoRegistrationClient(),
     new JsonResourceServer(dirname(__DIR__).'/config/resource_servers.json'),
-    $crypto,
-    $crypto
+    $cryptoStorage,
+    $cryptoStorage
 );
 
 $service = new MyOAuthService($o, $userAuthentication);

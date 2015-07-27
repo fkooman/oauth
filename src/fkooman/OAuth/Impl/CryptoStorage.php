@@ -12,7 +12,7 @@ use fkooman\OAuth\AccessToken;
 use fkooman\IO\IO;
 use Exception;
 
-class CryptoAuthorizationCode implements AuthorizationCodeStorageInterface, AccessTokenStorageInterface
+class CryptoStorage implements AuthorizationCodeStorageInterface, AccessTokenStorageInterface
 {
     /** @var \fkooman\Crypto\Symmetric */
     private $symmetric;
