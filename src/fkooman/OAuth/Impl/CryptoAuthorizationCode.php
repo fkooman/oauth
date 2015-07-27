@@ -4,15 +4,15 @@ namespace fkooman\OAuth\Impl;
 
 use fkooman\Crypto\Symmetric;
 use fkooman\Crypto\Key;
-use fkooman\OAuth\AuthorizationCodeInterface;
-use fkooman\OAuth\AccessTokenInterface;
+use fkooman\OAuth\AuthorizationCodeStorageInterface;
+use fkooman\OAuth\AccessTokenStorageInterface;
 use fkooman\Json\Json;
 use fkooman\OAuth\AuthorizationCode;
 use fkooman\OAuth\AccessToken;
 use fkooman\IO\IO;
 use Exception;
 
-class CryptoAuthorizationCode implements AuthorizationCodeInterface, AccessTokenInterface
+class CryptoAuthorizationCode implements AuthorizationCodeStorageInterface, AccessTokenStorageInterface
 {
     /** @var \fkooman\Crypto\Symmetric */
     private $symmetric;

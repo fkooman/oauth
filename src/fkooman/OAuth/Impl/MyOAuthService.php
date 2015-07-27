@@ -2,15 +2,16 @@
 
 namespace fkooman\OAuth\Impl;
 
+use fkooman\Rest\Plugin\Authentication\AuthenticationPluginInterface;
 use fkooman\OAuth\OAuthService;
 use fkooman\OAuth\OAuthServer;
 use fkooman\Http\Request;
 
 class MyOAuthService extends OAuthService
 {
-    public function __construct(OAuthServer $oauthServer)
+    public function __construct(OAuthServer $oauthServer, AuthenticationPluginInterface $authenticationPlugin)
     {
-        parent::__construct($oauthServer);
+        parent::__construct($oauthServer, $authenticationPlugin);
         $this->registerMyRoutes();
     }
 

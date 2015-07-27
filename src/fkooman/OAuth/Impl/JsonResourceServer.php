@@ -2,11 +2,11 @@
 
 namespace fkooman\OAuth\Impl;
 
-use fkooman\OAuth\ResourceServerInterface;
-use fkooman\OAuth\ResourceServerInfo;
+use fkooman\OAuth\ResourceServerStorageInterface;
+use fkooman\OAuth\ResourceServer;
 use fkooman\Json\Json;
 
-class JsonResourceServer implements ResourceServerInterface
+class JsonResourceServer implements ResourceServerStorageInterface
 {
     /** @var string */
     private $jsonFile;
@@ -26,6 +26,6 @@ class JsonResourceServer implements ResourceServerInterface
         // FIXME: this is not really nice... any other way?
         $data[$resourceServerId]['resource_server_id'] = $resourceServerId;
 
-        return ResourceServerInfo::fromArray($data[$resourceServerId]);
+        return ResourceServer::fromArray($data[$resourceServerId]);
     }
 }

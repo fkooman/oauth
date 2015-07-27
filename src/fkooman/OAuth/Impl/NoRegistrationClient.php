@@ -2,10 +2,10 @@
 
 namespace fkooman\OAuth\Impl;
 
-use fkooman\OAuth\ClientInterface;
-use fkooman\OAuth\ClientInfo;
+use fkooman\OAuth\ClientStorageInterface;
+use fkooman\OAuth\Client;
 
-class NoRegistrationClient implements ClientInterface
+class NoRegistrationClient implements ClientStorageInterface
 {
     public function getClient($clientId, $responseType, $redirectUri, $scope)
     {
@@ -17,6 +17,6 @@ class NoRegistrationClient implements ClientInterface
             return false;
         }
 
-        return new ClientInfo($clientId, $responseType, $redirectUri, $scope);
+        return new Client($clientId, $responseType, $redirectUri, $scope, null);
     }
 }

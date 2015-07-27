@@ -20,9 +20,9 @@ namespace fkooman\OAuth\Impl;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use RuntimeException;
-use fkooman\OAuth\TemplateInterface;
+use fkooman\OAuth\TemplateManagerInterface;
 
-class TwigTemplateManager implements TemplateInterface
+class TwigTemplateManager implements TemplateManagerInterface
 {
     /** @var Twig_Environment */
     private $twig;
