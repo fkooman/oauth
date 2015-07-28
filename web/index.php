@@ -7,9 +7,8 @@ use fkooman\OAuth\OAuthServer;
 use fkooman\OAuth\Impl\TwigTemplateManager;
 use fkooman\OAuth\Impl\CryptoStorage;
 use fkooman\Crypto\Key;
-use fkooman\Json\Json;
 use fkooman\Ini\IniReader;
-use fkooman\OAuth\Impl\NoRegistrationClient;
+use fkooman\OAuth\Storage\NullClientStorage;
 use fkooman\OAuth\Impl\JsonResourceServer;
 use fkooman\OAuth\Impl\MyOAuthService;
 
@@ -27,7 +26,7 @@ $cryptoStorage = new CryptoStorage($key);
 
 $o = new OAuthServer(
     new TwigTemplateManager(),
-    new NoRegistrationClient(),
+    new NullClientStorage(),
     new JsonResourceServer(dirname(__DIR__).'/config/resource_servers.json'),
     $cryptoStorage,
     $cryptoStorage
