@@ -2,14 +2,14 @@
 
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
-use fkooman\Rest\Plugin\Authentication\IndieAuth\IndieAuthAuthentication;
+use fkooman\OAuth\Storage\NullClientStorage;
+use fkooman\OAuth\Storage\JsonResourceServerStorage;
 use fkooman\OAuth\OAuthServer;
+use fkooman\Rest\Plugin\Authentication\IndieAuth\IndieAuthAuthentication;
+use fkooman\Ini\IniReader;
 use fkooman\OAuth\Impl\TwigTemplateManager;
 use fkooman\OAuth\Impl\CryptoStorage;
 use fkooman\Crypto\Key;
-use fkooman\Ini\IniReader;
-use fkooman\OAuth\Storage\NullClientStorage;
-use fkooman\OAuth\Impl\JsonResourceServer;
 use fkooman\OAuth\Impl\MyOAuthService;
 
 // CONFIG
@@ -27,7 +27,7 @@ $cryptoStorage = new CryptoStorage($key);
 $o = new OAuthServer(
     new TwigTemplateManager(),
     new NullClientStorage(),
-    new JsonResourceServer(dirname(__DIR__).'/config/resource_servers.json'),
+    new JsonResourceServerStorage(dirname(__DIR__).'/config/resource_servers.json'),
     $cryptoStorage,
     $cryptoStorage
 );

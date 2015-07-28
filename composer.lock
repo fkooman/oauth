@@ -206,12 +206,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-lib-oauth.git",
-                "reference": "770a640de7a4b60cdf30033e0d83aadc988237f7"
+                "reference": "e3c5af83344e48efe7cdbf8b2eee9152bb369822"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-oauth/zipball/770a640de7a4b60cdf30033e0d83aadc988237f7",
-                "reference": "770a640de7a4b60cdf30033e0d83aadc988237f7",
+                "url": "https://api.github.com/repos/fkooman/php-lib-oauth/zipball/e3c5af83344e48efe7cdbf8b2eee9152bb369822",
+                "reference": "e3c5af83344e48efe7cdbf8b2eee9152bb369822",
                 "shasum": ""
             },
             "require": {
@@ -243,7 +243,7 @@
                 }
             ],
             "description": "OAuth 2.0 Server Library",
-            "time": "2015-07-28 11:23:16"
+            "time": "2015-07-28 13:49:00"
         },
         {
             "name": "fkooman/rest",
