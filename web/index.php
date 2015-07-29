@@ -4,13 +4,12 @@ require_once dirname(__DIR__).'/vendor/autoload.php';
 
 use fkooman\OAuth\Storage\NullClientStorage;
 use fkooman\OAuth\Storage\JsonResourceServerStorage;
+use fkooman\OAuth\Storage\PdoCodeTokenStorage;
 use fkooman\OAuth\OAuthServer;
 use fkooman\Rest\Plugin\Authentication\IndieAuth\IndieAuthAuthentication;
 use fkooman\Ini\IniReader;
-use fkooman\OAuth\Impl\TwigTemplateManager;
-use fkooman\OAuth\Impl\CryptoStorage;
-use fkooman\Crypto\Key;
-use fkooman\OAuth\Impl\MyOAuthService;
+use fkooman\IndieOAuth\TwigTemplateManager;
+use fkooman\IndieOAuth\MyOAuthService;
 
 // CONFIG
 $iniReader = IniReader::fromFile(
@@ -21,15 +20,19 @@ $iniReader = IniReader::fromFile(
 $userAuthentication = new IndieAuthAuthentication();
 $userAuthentication->setUnauthorizedRedirectUri('/identify');
 
-$key = Key::load($iniReader->v('Security', 'Key'));
-$cryptoStorage = new CryptoStorage($key);
+$db = new PDO(
+    $iniReader->v('Db', 'dsn'),
+    $iniReader->v('Db', 'username', false),
+    $iniReader->v('Db', 'password', false)
+);
+$pdoCodeTokenStorage = new PdoCodeTokenStorage($db);
 
 $o = new OAuthServer(
     new TwigTemplateManager(),
     new NullClientStorage(),
     new JsonResourceServerStorage(dirname(__DIR__).'/config/resource_servers.json'),
-    $cryptoStorage,
-    $cryptoStorage
+    $pdoCodeTokenStorage,
+    $pdoCodeTokenStorage
 );
 
 $service = new MyOAuthService($o, $userAuthentication);

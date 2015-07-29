@@ -7,23 +7,19 @@
     ],
     "autoload": {
         "psr-0": {
-            "fkooman\\OAuth\\Impl\\": "src/"
+            "fkooman\\IndieOAuth\\": "src/"
         }
     },
-    "description": "Simple OAuth 2.0 Server",
+    "description": "IndieAuth OAuth 2.0 AS",
     "license": "AGPL-3.0",
-    "name": "fkooman/oauth-server",
+    "name": "fkooman/indieauth-oauth",
     "require": {
         "ext-date": "*",
         "ext-filter": "*",
         "ext-spl": "*",
-        "fkooman/crypto": "^1.0.0",
         "fkooman/ini": "^1.0.0",
-        "fkooman/io": "^1.0.0",
-        "fkooman/json": "^1.0",
         "fkooman/oauth": "dev-master",
         "fkooman/rest": "^1.0.0",
-        "fkooman/rest-plugin-authentication-basic": "^1.0.0",
         "fkooman/rest-plugin-authentication-indieauth": "dev-master",
         "twig/twig": "^1.18"
     }

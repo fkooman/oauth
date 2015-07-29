@@ -1,6 +1,6 @@
 <?php
 
-namespace fkooman\OAuth\Impl;
+namespace fkooman\IndieOAuth;
 
 use fkooman\Rest\Plugin\Authentication\AuthenticationPluginInterface;
 use fkooman\OAuth\OAuthService;

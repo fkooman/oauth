@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace fkooman\OAuth\Impl;
+namespace fkooman\IndieOAuth;
 
 use Twig_Loader_Filesystem;
 use Twig_Environment;
@@ -32,8 +32,8 @@ class TwigTemplateManager implements TemplateManagerInterface
 
     public function __construct($cacheDir = null)
     {
-        $configTemplateDir = dirname(dirname(dirname(dirname(__DIR__)))).'/config/views';
-        $defaultTemplateDir = dirname(dirname(dirname(dirname(__DIR__)))).'/views';
+        $configTemplateDir = dirname(dirname(dirname(__DIR__))).'/config/views';
+        $defaultTemplateDir = dirname(dirname(dirname(__DIR__))).'/views';
 
         $templateDirs = array();
         if (false !== is_dir($configTemplateDir)) {

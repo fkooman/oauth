@@ -1,2 +1,6 @@
-[Security]
-Key = "<replace me>"
+[Db]
+dsn = "sqlite:/var/lib/oauth/codes_tokens.sqlite"
+;dsn = "mysql:host=localhost;dbname=oauth"
+;username = "oauth"
+;password = "s3cr3t"
+;dsn = "pgsql:host=localhost;port=5432;dbname=XYZ;user=ABC;password=DEF"

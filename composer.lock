@@ -4,86 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2d8646a02a062ad9f5ddad8f3211c6fd",
+    "hash": "92549216e6e927bd88bb5e27c6ba2236",
     "packages": [
-        {
-            "name": "fkooman/base64",
-            "version": "1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fkooman/php-lib-base64.git",
-                "reference": "f29179c593efb344e470b4a1dcffd2819bd6e084"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-base64/zipball/f29179c593efb344e470b4a1dcffd2819bd6e084",
-                "reference": "f29179c593efb344e470b4a1dcffd2819bd6e084",
-                "shasum": ""
-            },
-            "require": {
-                "ext-spl": "*",
-                "php": ">5.3.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "fkooman\\Base64\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "François Kooman",
-                    "email": "fkooman@tuxed.net"
-                }
-            ],
-            "description": "A base64 encoder and decoder",
-            "time": "2015-07-13 16:08:09"
-        },
-        {
-            "name": "fkooman/crypto",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fkooman/php-lib-crypto.git",
-                "reference": "33f03c92107be67cebe4ed10fbfaca89583ff681"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-crypto/zipball/33f03c92107be67cebe4ed10fbfaca89583ff681",
-                "reference": "33f03c92107be67cebe4ed10fbfaca89583ff681",
-                "shasum": ""
-            },
-            "require": {
-                "ext-hash": "*",
-                "ext-openssl": "*",
-                "ext-spl": "*",
-                "fkooman/base64": "^1.0",
-                "fkooman/json": "^1.0",
-                "php": ">= 5.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "fkooman\\Crypto\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "François Kooman",
-                    "email": "fkooman@tuxed.net"
-                }
-            ],
-            "description": "A simple encryption and decryption library",
-            "time": "2015-07-22 11:29:16"
-        },
         {
             "name": "fkooman/ini",
             "version": "1.0.0",
@@ -206,12 +128,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-lib-oauth.git",
-                "reference": "e3c5af83344e48efe7cdbf8b2eee9152bb369822"
+                "reference": "10db0b0aa2d265b87f07e654201f6e642a95cda7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-oauth/zipball/e3c5af83344e48efe7cdbf8b2eee9152bb369822",
-                "reference": "e3c5af83344e48efe7cdbf8b2eee9152bb369822",
+                "url": "https://api.github.com/repos/fkooman/php-lib-oauth/zipball/10db0b0aa2d265b87f07e654201f6e642a95cda7",
+                "reference": "10db0b0aa2d265b87f07e654201f6e642a95cda7",
                 "shasum": ""
             },
             "require": {
@@ -219,8 +141,9 @@
                 "ext-pcre": "*",
                 "ext-pdo": "*",
                 "fkooman/io": "^1.0.0",
+                "fkooman/json": "^1.0.0",
                 "fkooman/rest": "^1.0.0",
-                "fkooman/rest-plugin-authentication": "^1.0.0",
+                "fkooman/rest-plugin-authentication-basic": "^1.0.0",
                 "php": ">= 5.3.3"
             },
             "require-dev": {
@@ -243,7 +166,7 @@
                 }
             ],
             "description": "OAuth 2.0 Server Library",
-            "time": "2015-07-28 13:49:00"
+            "time": "2015-07-28 15:04:08"
         },
         {
             "name": "fkooman/rest",

@@ -6,6 +6,26 @@ Very simple OAuth 2.0 authorization server.
 
 **WORK IN PROGRESS**
 
+# Development
+We assume that your web server runs under the `apache` user and your user 
+account is called `fkooman` in group `fkooman`.
+
+    $ cd /var/www
+    $ sudo mkdir oauth
+    $ sudo chown fkooman.fkooman oauth
+    $ git clone https://github.com/fkooman/oauth.git
+    $ cd oauth
+    $ /path/to/composer.phar install
+    $ mkdir -p data
+    $ sudo chown -R apache.apache data
+    $ sudo semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/oauth/data(/.*)?'
+    $ sudo restorecon -R /var/www/oauth/data
+    $ cp config/server.ini.example config/server.ini
+
+Now to initialize the database:
+
+    $ sudo -u apache bin/oauth-init-db
+
 # Apache
 Place this in `/etc/httpd/conf.d/oauth.conf`:
 
