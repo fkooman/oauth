@@ -8,7 +8,7 @@ use fkooman\OAuth\Storage\PdoCodeTokenStorage;
 use fkooman\OAuth\OAuthServer;
 use fkooman\Rest\Plugin\Authentication\IndieAuth\IndieAuthAuthentication;
 use fkooman\Ini\IniReader;
-use fkooman\IndieOAuth\TwigTemplateManager;
+use fkooman\Tpl\TwigTemplateManager;
 use fkooman\IndieOAuth\MyOAuthService;
 
 // CONFIG
@@ -27,8 +27,15 @@ $db = new PDO(
 );
 $pdoCodeTokenStorage = new PdoCodeTokenStorage($db);
 
+$t = new TwigTemplateManager(
+    array(
+        dirname(__DIR__).'/views',
+        dirname(__DIR__).'/config/views',
+    )
+);
+
 $o = new OAuthServer(
-    new TwigTemplateManager(),
+    $t,
     new NullClientStorage(),
     new JsonResourceServerStorage(dirname(__DIR__).'/config/resource_servers.json'),
     $pdoCodeTokenStorage,

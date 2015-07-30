@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "92549216e6e927bd88bb5e27c6ba2236",
+    "hash": "0c3b89debfdba6f26d5235dff413fa72",
     "packages": [
         {
             "name": "fkooman/ini",
@@ -128,12 +128,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-lib-oauth.git",
-                "reference": "10db0b0aa2d265b87f07e654201f6e642a95cda7"
+                "reference": "2f8a32cc92fb1f93a33c69c2f8e40e5d4ba9718e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-oauth/zipball/10db0b0aa2d265b87f07e654201f6e642a95cda7",
-                "reference": "10db0b0aa2d265b87f07e654201f6e642a95cda7",
+                "url": "https://api.github.com/repos/fkooman/php-lib-oauth/zipball/2f8a32cc92fb1f93a33c69c2f8e40e5d4ba9718e",
+                "reference": "2f8a32cc92fb1f93a33c69c2f8e40e5d4ba9718e",
                 "shasum": ""
             },
             "require": {
@@ -144,6 +144,7 @@
                 "fkooman/json": "^1.0.0",
                 "fkooman/rest": "^1.0.0",
                 "fkooman/rest-plugin-authentication-basic": "^1.0.0",
+                "fkooman/tpl": "^1.0.0",
                 "php": ">= 5.3.3"
             },
             "require-dev": {
@@ -166,7 +167,7 @@
                 }
             ],
             "description": "OAuth 2.0 Server Library",
-            "time": "2015-07-28 15:04:08"
+            "time": "2015-07-30 14:24:52"
         },
         {
             "name": "fkooman/rest",
@@ -345,6 +346,44 @@
             ],
             "description": "IndieAuth plugin for fkooman/rest",
             "time": "2015-07-23 09:49:40"
+        },
+        {
+            "name": "fkooman/tpl",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fkooman/php-lib-tpl.git",
+                "reference": "98e9a69cb234930edfe3cfb99bba9447f5893d58"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fkooman/php-lib-tpl/zipball/98e9a69cb234930edfe3cfb99bba9447f5893d58",
+                "reference": "98e9a69cb234930edfe3cfb99bba9447f5893d58",
+                "shasum": ""
+            },
+            "require": {
+                "ext-spl": "*",
+                "php": ">= 5.3.3",
+                "twig/twig": "^1.18"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "fkooman\\Tpl\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "François Kooman",
+                    "email": "fkooman@tuxed.net"
+                }
+            ],
+            "description": "Simple Template Abstraction Library",
+            "time": "2015-07-30 14:19:32"
         },
         {
             "name": "guzzlehttp/guzzle",
