@@ -14,13 +14,11 @@
     "license": "AGPL-3.0",
     "name": "fkooman/indieauth-oauth",
     "require": {
-        "ext-date": "*",
-        "ext-filter": "*",
-        "ext-spl": "*",
         "fkooman/ini": "^1.0.0",
         "fkooman/oauth": "dev-master",
         "fkooman/rest": "^1.0.0",
         "fkooman/rest-plugin-authentication-indieauth": "dev-master",
-        "fkooman/tpl": "^1.0.0"
+        "fkooman/tpl-twig": "^1.0.0",
+        "php": ">=5.3.3"
     }
 }

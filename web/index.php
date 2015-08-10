@@ -19,17 +19,17 @@ $iniReader = IniReader::fromFile(
 );
 
 // USER AUTH
-#$userAuthentication = new IndieAuthAuthentication();
-#$userAuthentication->setUnauthorizedRedirectUri('/identify');
+$userAuthentication = new IndieAuthAuthentication();
+$userAuthentication->setUnauthorizedRedirectUri('/identify');
 
-$userAuthentication = new BasicAuthentication(
-    function($userId) {
-        // read users file
-        $r = Json::decodeFile(dirname(__DIR__).'/config/users.json');
-        return $r[$userId]['secret'];
-    },
-    array('realm' => 'OAuth')
-);
+#$userAuthentication = new BasicAuthentication(
+#    function($userId) {
+#        // read users file
+#        $r = Json::decodeFile(dirname(__DIR__).'/config/users.json');
+#        return $r[$userId]['secret'];
+#    },
+#    array('realm' => 'OAuth')
+#);
 
 $db = new PDO(
     $iniReader->v('Db', 'dsn'),

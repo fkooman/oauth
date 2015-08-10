@@ -24,7 +24,7 @@ account is called `fkooman` in group `fkooman`.
 
 Now to initialize the database:
 
-    $ sudo -u apache bin/oauth-init-db
+    $ sudo -u apache php bin/oauth-init-db.php
 
 # Apache
 Place this in `/etc/httpd/conf.d/oauth.conf`:
@@ -48,8 +48,6 @@ Place this in `/etc/httpd/conf.d/oauth.conf`:
 # Configuration
 ## Server
 The server configuration is done in `config/server.ini`. 
-
-You can use the script `bin/generateKey.php` to generate a key.
 
 ## Users
 Currently only Basic authentication is supported for user authentication. You
@@ -84,7 +82,7 @@ Add resource servers to `config/resource_servers.json`, an example file:
     }
 
 The `secret` field is the output of `password_hash()`. You can use the script 
-`bin/passwordHash.php` to generate a hash for your chosen secret. The 
+`bin/oauth-password-hash.php` to generate a hash for your chosen secret. The 
 `scope` field contain the scope valus (space separated) supported by the 
 resource server.
 
