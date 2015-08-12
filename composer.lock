@@ -128,12 +128,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fkooman/php-lib-oauth.git",
-                "reference": "a559862890606db4a9a191f0d680322b8c9023ee"
+                "reference": "595f95123630d7251a571506d4c29d6171c6a2cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fkooman/php-lib-oauth/zipball/a559862890606db4a9a191f0d680322b8c9023ee",
-                "reference": "a559862890606db4a9a191f0d680322b8c9023ee",
+                "url": "https://api.github.com/repos/fkooman/php-lib-oauth/zipball/595f95123630d7251a571506d4c29d6171c6a2cc",
+                "reference": "595f95123630d7251a571506d4c29d6171c6a2cc",
                 "shasum": ""
             },
             "require": {
@@ -168,7 +168,7 @@
                 }
             ],
             "description": "OAuth 2.0 Server Library",
-            "time": "2015-08-10 11:12:46"
+            "time": "2015-08-12 11:12:42"
         },
         {
             "name": "fkooman/rest",
@@ -670,16 +670,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.19.0",
+            "version": "v1.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "edbeaf43b0a606cdaadc32a11d2673614a377b90"
+                "reference": "1ea4e5f81c6d005fe84d0b38e1c4f1955eb86844"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/edbeaf43b0a606cdaadc32a11d2673614a377b90",
-                "reference": "edbeaf43b0a606cdaadc32a11d2673614a377b90",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/1ea4e5f81c6d005fe84d0b38e1c4f1955eb86844",
+                "reference": "1ea4e5f81c6d005fe84d0b38e1c4f1955eb86844",
                 "shasum": ""
             },
             "require": {
@@ -688,7 +688,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.19-dev"
+                    "dev-master": "1.20-dev"
                 }
             },
             "autoload": {
@@ -723,7 +723,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-07-31 13:45:26"
+            "time": "2015-08-12 15:56:39"
         }
     ],
     "packages-dev": [],
