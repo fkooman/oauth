@@ -7,7 +7,7 @@ use fkooman\Ini\IniReader;
 use fkooman\Json\Json;
 use fkooman\OAuth\OAuthServer;
 use fkooman\OAuth\Storage\JsonResourceServerStorage;
-use fkooman\OAuth\Storage\NullClientStorage;
+use fkooman\OAuth\Storage\JsonClientStorage;
 use fkooman\OAuth\Storage\PdoCodeTokenStorage;
 use fkooman\Rest\Plugin\Authentication\Basic\BasicAuthentication;
 use fkooman\Rest\Plugin\Authentication\IndieAuth\IndieAuthAuthentication;
@@ -48,7 +48,7 @@ $t = new TwigTemplateManager(
 
 $o = new OAuthServer(
     $t,
-    new NullClientStorage(),
+    new JsonClientStorage(dirname(__DIR__).'/config/clients.json'),
     new JsonResourceServerStorage(dirname(__DIR__).'/config/resource_servers.json'),
     $pdoCodeTokenStorage,
     $pdoCodeTokenStorage
